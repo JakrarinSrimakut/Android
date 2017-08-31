@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SimpleLoginApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_user">User</string>
+    <string name="login_text">Login Page</string>
+    <string name="username_text">User Name</string>
+    <string name="password_text">Password</string>
+    <string name="attempts_text">Attempts:</string>
+    <string name="button_login">Login</string>
+    <string name="Second_page_text">Welcome to the Second Page</string>
+</resources>
