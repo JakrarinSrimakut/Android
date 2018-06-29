@@ -64,7 +64,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -87,14 +90,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../CMPS121/CMPS121Project/Hck3rz" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="device.picker.selection" value="8XV5T16217000209" />
   </component>
   <component name="RunDashboard">
