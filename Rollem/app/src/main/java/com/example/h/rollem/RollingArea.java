@@ -50,6 +50,16 @@ public class RollingArea extends Fragment {
                         //show blank rolling dice for 1 second then to random die side
                         rollingDiceImageView.setImageResource(R.drawable.d10_side_blank_rolled);
                         break;
+                    case R.drawable.d12_side_1:
+                        rolledDiceDrawableId = new Dice().D12Side();//Get random d4 side drawable id
+                        //show blank rolling dice for 1 second then to random die side
+                        rollingDiceImageView.setImageResource(R.drawable.d12_side_blank_rolled);
+                        break;
+                    case R.drawable.d20_side_1:
+                        rolledDiceDrawableId = new Dice().D20Side();//Get random d4 side drawable id
+                        //show blank rolling dice for 1 second then to random die side
+                        rollingDiceImageView.setImageResource(R.drawable.d20_side_blank_rolled);
+                        break;
                 }
                 new CountDownTimer(500,500){
                     @Override

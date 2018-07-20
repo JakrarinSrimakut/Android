@@ -31,6 +31,8 @@ public class DiceContainer extends Fragment {
         d6 = (ImageView) getActivity().findViewById(R.id.d6ImageView);
         d8 = (ImageView) getActivity().findViewById(R.id.d8ImageView);
         d10 = (ImageView) getActivity().findViewById(R.id.d10ImageView);
+        d12 = (ImageView) getActivity().findViewById(R.id.d12ImageView);
+        d20 = (ImageView) getActivity().findViewById(R.id.d20ImageView);
 
         //When clicked d4 disappear and appear in rolling area
         d4.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +50,7 @@ public class DiceContainer extends Fragment {
             @Override
             public void onClick(View view) {
                 comm = (Communicator)getActivity();
-                comm.respond(R.drawable.d6_side_1);//send d4 drawable id to main respond method
+                comm.respond(R.drawable.d6_side_1);//send d6 drawable id to main respond method
                 setDiceVisibility(d6);//set previous invisible dice to visible
             }
         });
@@ -58,18 +60,38 @@ public class DiceContainer extends Fragment {
             @Override
             public void onClick(View view) {
                 comm = (Communicator)getActivity();
-                comm.respond(R.drawable.d8_side_1);//send d4 drawable id to main respond method
+                comm.respond(R.drawable.d8_side_1);//send d8 drawable id to main respond method
                 setDiceVisibility(d8);//set previous invisible dice to visible
             }
         });
 
-        //When clicked d8 disappear and appear in rolling area
+        //When clicked d10 disappear and appear in rolling area
         d10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 comm = (Communicator)getActivity();
-                comm.respond(R.drawable.d10_side_1);//send d4 drawable id to main respond method
+                comm.respond(R.drawable.d10_side_1);//send d10 drawable id to main respond method
                 setDiceVisibility(d10);//set previous invisible dice to visible
+            }
+        });
+
+        //When clicked d12 disappear and appear in rolling area
+        d12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                comm = (Communicator)getActivity();
+                comm.respond(R.drawable.d12_side_1);//send d12 drawable id to main respond method
+                setDiceVisibility(d12);//set previous invisible dice to visible
+            }
+        });
+
+        //When clicked d20 disappear and appear in rolling area
+        d20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                comm = (Communicator)getActivity();
+                comm.respond(R.drawable.d20_side_1);//send d12 drawable id to main respond method
+                setDiceVisibility(d20);//set previous invisible dice to visible
             }
         });
     }
@@ -94,7 +116,7 @@ public class DiceContainer extends Fragment {
                     diceToBeSetInvisible.setVisibility(View.INVISIBLE);
                     break;
                 case R.id.d8ImageView:
-                    d6.setVisibility(View.VISIBLE);
+                    d8.setVisibility(View.VISIBLE);
                     invisibleDice = diceToBeSetInvisible;
                     diceToBeSetInvisible.setVisibility(View.INVISIBLE);
                     break;
@@ -103,10 +125,17 @@ public class DiceContainer extends Fragment {
                     invisibleDice = diceToBeSetInvisible;
                     diceToBeSetInvisible.setVisibility(View.INVISIBLE);
                     break;
+                case R.id.d12ImageView:
+                    d12.setVisibility(View.VISIBLE);
+                    invisibleDice = diceToBeSetInvisible;
+                    diceToBeSetInvisible.setVisibility(View.INVISIBLE);
+                    break;
+                case R.id.d20ImageView:
+                    d20.setVisibility(View.VISIBLE);
+                    invisibleDice = diceToBeSetInvisible;
+                    diceToBeSetInvisible.setVisibility(View.INVISIBLE);
+                    break;
             }
         }
-
-
-
     }
 }
