@@ -35,6 +35,8 @@ public class RollingArea extends Fragment implements GestureDetector.OnGestureLi
     private LayoutInflater layoutInflater;
     PopupWindow popupWindow;
     TextView popUpWindowResultTextView;
+    Dice dice = new Dice();
+    DiceModifier diceModifier = new DiceModifier();
 
     @Nullable
     @Override
@@ -109,37 +111,37 @@ public class RollingArea extends Fragment implements GestureDetector.OnGestureLi
 
         switch(diceType){
             case R.drawable.d4_side_1:
-                rolledDiceDrawableId = new Dice().D4Side();//Get random d4 side drawable id
+                rolledDiceDrawableId = dice.D4Side();//Get random d4 side drawable id
                 //show blank rolling dice for 1 second then to random die side
                 rollingDiceImageView.setImageResource(R.drawable.d4_side_blank_rolled);
                 break;
             case R.drawable.d6_side_1:
-                rolledDiceDrawableId = new Dice().D6Side();//Get random d6 side drawable id
+                rolledDiceDrawableId = dice.D6Side();//Get random d6 side drawable id
                 //show blank rolling dice for 1 second then to random die side
                 rollingDiceImageView.setImageResource(R.drawable.d6_side_blank_rolled);
                 break;
             case R.drawable.d8_side_1:
-                rolledDiceDrawableId = new Dice().D8Side();//Get random d8 side drawable id
+                rolledDiceDrawableId = dice.D8Side();//Get random d8 side drawable id
                 //show blank rolling dice for 1 second then to random die side
                 rollingDiceImageView.setImageResource(R.drawable.d8_side_blank_rolled);
                 break;
             case R.drawable.d10_side_1:
-                rolledDiceDrawableId = new Dice().D10Side();//Get random d10 side drawable id
+                rolledDiceDrawableId = dice.D10Side();//Get random d10 side drawable id
                 //show blank rolling dice for 1 second then to random die side
                 rollingDiceImageView.setImageResource(R.drawable.d10_side_blank_rolled);
                 break;
             case R.drawable.d12_side_1:
-                rolledDiceDrawableId = new Dice().D12Side();//Get random d12 side drawable id
+                rolledDiceDrawableId = dice.D12Side();//Get random d12 side drawable id
                 //show blank rolling dice for 1 second then to random die side
                 rollingDiceImageView.setImageResource(R.drawable.d12_side_blank_rolled);
                 break;
             case R.drawable.d20_side_1:
-                rolledDiceDrawableId = new Dice().D20Side();//Get random d20 side drawable id
+                rolledDiceDrawableId = dice.D20Side();//Get random d20 side drawable id
                 //show blank rolling dice for 1 second then to random die side
                 rollingDiceImageView.setImageResource(R.drawable.d20_side_blank_rolled);
                 break;
             case R.drawable.d100_side_00:
-                rolledDiceDrawableId = new Dice().D100Side();//Get random d100 side drawable id
+                rolledDiceDrawableId = dice.D100Side();//Get random d100 side drawable id
                 //show blank rolling dice for 1 second then to random die side
                 rollingDiceImageView.setImageResource(R.drawable.d100_side_blank_rolled);
                 break;
@@ -159,10 +161,12 @@ public class RollingArea extends Fragment implements GestureDetector.OnGestureLi
                 //3.DiceModifier-get method to grab number of dice and modifier DONE
                 //4.Calculate result here and set it to pop_up_window textview
                 //5.Dislplay pop up when dice is clicked
-                diceNumber = new Dice().getDiceNumber();
-                diceAmount = new DiceModifier().getDiceAmount();
-                modifier = new DiceModifier().getModifier();
+                diceNumber = dice.getDiceNumber();
+                diceAmount = diceModifier.getDiceAmount();
+                modifier = diceModifier.getModifier();
                 calculatedResult = diceAmount*diceNumber+modifier;
+
+
 
                 layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.pop_up_window,null);
