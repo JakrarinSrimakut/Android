@@ -83,7 +83,7 @@ public class Dice {
             case 8:
                 return (R.drawable.d8_side_8);
             default:
-                Log.v("D6Error", String.valueOf(diceNumber));
+                Log.v("D8Error", String.valueOf(diceNumber));
                 return (0);//return error
         }
     }
@@ -117,7 +117,7 @@ public class Dice {
             case 10:
                 return (R.drawable.d10_side_10);
             default:
-                Log.v("D6Error", String.valueOf(diceNumber));
+                Log.v("D10Error", String.valueOf(diceNumber));
                 return (0);//return error
         }
     }
@@ -155,7 +155,7 @@ public class Dice {
             case 12:
                 return (R.drawable.d12_side_12);
             default:
-                Log.v("D6Error", String.valueOf(diceNumber));
+                Log.v("D12Error", String.valueOf(diceNumber));
                 return (0);//return error
         }
     }
@@ -209,8 +209,46 @@ public class Dice {
             case 20:
                 return (R.drawable.d20_side_20);
             default:
-                Log.v("D6Error", String.valueOf(diceNumber));
+                Log.v("D20Error", String.valueOf(diceNumber));
                 return (0);//return error
         }
+    }
+
+    public int D100Side(){
+        max = 10;
+        min = 1;
+
+        int range = (max-min)+1;
+        diceNumber =(int) (Math.random()*range)+min;//(int)(Math.random() * ((upperbound - lowerbound) + 1) + lowerbound);
+
+        switch (diceNumber){
+            case 1:
+                return (R.drawable.d100_side_00);
+            case 2:
+                return (R.drawable.d100_side_10);
+            case 3:
+                return (R.drawable.d100_side_20);
+            case 4:
+                return (R.drawable.d100_side_30);
+            case 5:
+                return (R.drawable.d100_side_40);
+            case 6:
+                return (R.drawable.d100_side_50);
+            case 7:
+                return (R.drawable.d100_side_60);
+            case 8:
+                return (R.drawable.d100_side_70);
+            case 9:
+                return (R.drawable.d100_side_80);
+            case 10:
+                return (R.drawable.d100_side_90);
+            default:
+                Log.v("D100Error", String.valueOf(diceNumber));
+                return (0);//return error
+        }
+    }
+
+    public int getDiceNumber(){
+        return diceNumber;
     }
 }

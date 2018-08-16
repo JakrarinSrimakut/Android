@@ -16,6 +16,7 @@ public class DiceContainer extends Fragment {
     ImageView d10;
     ImageView d12;
     ImageView d20;
+    ImageView d100;
     Communicator comm;
 
     @Nullable
@@ -33,6 +34,7 @@ public class DiceContainer extends Fragment {
         d10 = (ImageView) getActivity().findViewById(R.id.d10ImageView);
         d12 = (ImageView) getActivity().findViewById(R.id.d12ImageView);
         d20 = (ImageView) getActivity().findViewById(R.id.d20ImageView);
+        d100 = (ImageView) getActivity().findViewById(R.id.d100ImageView);
 
         //When clicked d4 disappear and appear in rolling area
         d4.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +96,16 @@ public class DiceContainer extends Fragment {
                 setDiceVisibility(d20);//set previous invisible dice to visible
             }
         });
+
+        //When clicked d100 disappear and appear in rolling area
+        d100.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                comm = (Communicator)getActivity();
+                comm.respond(R.drawable.d100_side_00);//send d12 drawable id to main respond method
+                setDiceVisibility(d100);//set previous invisible dice to visible
+            }
+        });
     }
 
     //make previous selected dice visible and and current invisible. if no previous selected just make current visible
@@ -132,6 +144,11 @@ public class DiceContainer extends Fragment {
                     break;
                 case R.id.d20ImageView:
                     d20.setVisibility(View.VISIBLE);
+                    invisibleDice = diceToBeSetInvisible;
+                    diceToBeSetInvisible.setVisibility(View.INVISIBLE);
+                    break;
+                case R.id.d100ImageView:
+                    d100.setVisibility(View.VISIBLE);
                     invisibleDice = diceToBeSetInvisible;
                     diceToBeSetInvisible.setVisibility(View.INVISIBLE);
                     break;
