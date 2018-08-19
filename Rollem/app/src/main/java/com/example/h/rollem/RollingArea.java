@@ -36,7 +36,7 @@ public class RollingArea extends Fragment implements GestureDetector.OnGestureLi
     PopupWindow popupWindow;
     TextView popUpWindowResultTextView;
     Dice dice = new Dice();
-    DiceModifier diceModifier = new DiceModifier();
+    //DiceModifier diceModifier = new DiceModifier();
 
     @Nullable
     @Override
@@ -161,12 +161,13 @@ public class RollingArea extends Fragment implements GestureDetector.OnGestureLi
                 //3.DiceModifier-get method to grab number of dice and modifier DONE
                 //4.Calculate result here and set it to pop_up_window textview
                 //5.Dislplay pop up when dice is clicked
-                diceNumber = dice.getDiceNumber();
+                /*diceNumber = dice.getDiceNumber();
                 diceAmount = diceModifier.getDiceAmount();
                 modifier = diceModifier.getModifier();
                 calculatedResult = diceAmount*diceNumber+modifier;
 
-
+                Log.d("diceAmount", String.valueOf(diceAmount));
+                Log.d("modifier", String.valueOf(modifier));
 
                 layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.pop_up_window,null);
@@ -185,10 +186,8 @@ public class RollingArea extends Fragment implements GestureDetector.OnGestureLi
                         popupWindow.dismiss();
                         return true;
                     }
-                });
+                });*/
             }
         }.start();
-
     }
-
 }

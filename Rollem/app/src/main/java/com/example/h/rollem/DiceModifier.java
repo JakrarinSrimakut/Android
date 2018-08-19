@@ -1,6 +1,7 @@
 package com.example.h.rollem;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.h.rollem.R;
+
 public class DiceModifier extends Fragment {
     Button amountOfDiceMinusButton;
     Button amountOfDicePlusButton;
@@ -16,8 +19,8 @@ public class DiceModifier extends Fragment {
     Button modifierPlusButton;
     TextView amountOfDiceTextView;
     TextView modifierTextView;
-    int diceAmount = 1;
-    int modifier = 0;
+    static int diceAmount = 1;
+    static int modifier = 0;
 
     @Nullable
     @Override
@@ -28,7 +31,7 @@ public class DiceModifier extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        amountOfDiceMinusButton = (Button) getActivity().findViewById(R.id.amountOfDiceMinusButton);
+        /*amountOfDiceMinusButton = (Button) getActivity().findViewById(R.id.amountOfDiceMinusButton);
         amountOfDicePlusButton = (Button) getActivity().findViewById(R.id.amountOfDicePlusButton);
         modifierMinusButton = (Button) getActivity().findViewById(R.id.modifierMinusButton);
         modifierPlusButton = (Button) getActivity().findViewById(R.id.modifierPlusButton);
@@ -78,7 +81,7 @@ public class DiceModifier extends Fragment {
                     modifierTextView.setText("+" + modifier);
                 }
             }
-        });
+        });*/
     }
 
     public int getDiceAmount(){
