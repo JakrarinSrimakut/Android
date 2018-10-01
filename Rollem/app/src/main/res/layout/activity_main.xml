@@ -14,7 +14,7 @@
 
         <fragment
             android:id="@+id/diceContainerFragment"
-            android:name="com.example.h.rollem.DiceContainer"
+            android:name="com.shrimpnugget.h.rollem.DiceContainer"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -22,7 +22,7 @@
 
         <fragment
             android:id="@+id/rollingAreaFragment"
-            android:name="com.example.h.rollem.RollingArea"
+            android:name="com.shrimpnugget.h.rollem.RollingArea"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
@@ -30,7 +30,7 @@
 
         <fragment
             android:id="@+id/diceModifierFragment"
-            android:name="com.example.h.rollem.DiceModifier"
+            android:name="com.shrimpnugget.h.rollem.DiceModifier"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -38,4 +38,16 @@
 
 
     </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-1868303921416559/7603630180">
+    </com.google.android.gms.ads.AdView>
+
 </RelativeLayout>
