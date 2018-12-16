@@ -1,6 +1,7 @@
 package com.example.h.checkplz;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,7 +39,7 @@ public class PeopleBillListAdapter extends
             // to access the context from any ViewHolder instance.
             super(itemView);
 
-            nameTextView = (TextView) itemView.findViewById(R.id.person_name);
+            nameTextView = (TextView) itemView.findViewById(R.id.person_name_list_activity);
             tipTextView = (TextView) itemView.findViewById(R.id.person_tip);
             taxTextView = (TextView) itemView.findViewById(R.id.person_tax);
             totalTextView = (TextView) itemView.findViewById(R.id.person_total);
@@ -82,11 +83,11 @@ public class PeopleBillListAdapter extends
         TextView textViewName = viewHolder.nameTextView;
         textViewName.setText(personBill.getmName());
         TextView textViewTip = viewHolder.tipAmountTextView;
-        textViewTip.setText(personBill.getmTip());
+        textViewTip.setText(Integer.toString(personBill.getmTip()));
         TextView textViewTax = viewHolder.taxAmountTextView;
-        textViewTax.setText(personBill.getmTax());
+        textViewTax.setText(Integer.toString(personBill.getmTax()));
         TextView textViewTotal = viewHolder.totalAmountTextView;
-        textViewTotal.setText(personBill.getmTotalBill());
+        textViewTotal.setText(Integer.toString(personBill.getmTotalBill()));
     }
 
     // Returns the total count of items in the list

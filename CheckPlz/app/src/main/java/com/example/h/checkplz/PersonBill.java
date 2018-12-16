@@ -4,18 +4,18 @@ import java.util.LinkedHashMap;
 
 public class PersonBill {
     private String mName;
+    private static int personCount=1;
     private int mTotalBill;
     private int mTax;
     private int mTip;
-    private LinkedHashMap<String, Integer> mItemList;
+    private LinkedHashMap<String, Integer> mItemList = new LinkedHashMap<>();
 
     public PersonBill(){
+        mName="Person"+personCount;
         mTotalBill=0;
         mTax=0;
         mTip=0;
-        for(int i=0; i<5; i++){
-            mItemList.put("Item"+Integer.toString(i), 0);
-        }
+        personCount++;
     }
 
     public String getmName() {

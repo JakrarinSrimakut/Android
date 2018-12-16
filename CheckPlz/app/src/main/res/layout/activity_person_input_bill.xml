@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
 
             <TextView
                 android:id="@+id/name"
@@ -35,18 +36,21 @@
                 android:id="@+id/item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:text="@string/person_item_name"
                 android:layout_weight="1" />
             <TextView
                 android:id="@+id/item_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:text="@string/person_item_cost"
                 android:layout_weight="1"/>
             <TextView
                 android:id="@+id/item_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:text="@string/person_item_amount"
                 android:layout_weight="1"/>
         </LinearLayout>
