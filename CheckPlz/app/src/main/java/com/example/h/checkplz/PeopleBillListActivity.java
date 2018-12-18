@@ -1,5 +1,7 @@
 package com.example.h.checkplz;
 
+import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +19,10 @@ public class PeopleBillListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_bill_list);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("PeopleBillListActivity");
+
         // Lookup the recyclerview in activity layout
         RecyclerView rvPeopleBillList = (RecyclerView) findViewById(R.id.rv_people_bill_list);
 
@@ -43,7 +49,8 @@ public class PeopleBillListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_add:
-                //Intent
+                Intent intent = new Intent(this, PersonInputBillActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

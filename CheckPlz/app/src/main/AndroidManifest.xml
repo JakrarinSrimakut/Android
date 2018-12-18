@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PersonInputBillActivity"></activity>
+        <activity android:name=".PersonInputBillActivity"
+            android:parentActivityName=".PeopleBillListActivity"></activity>
     </application>
 
 </manifest>
