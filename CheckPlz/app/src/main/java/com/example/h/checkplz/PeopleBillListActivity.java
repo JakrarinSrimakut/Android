@@ -41,7 +41,7 @@ public class PeopleBillListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.bill,menu);
+        inflater.inflate(R.menu.enter_person_input_bill_activity,menu);
         return true;
     }
 
