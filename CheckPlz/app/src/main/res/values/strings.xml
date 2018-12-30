@@ -12,4 +12,10 @@
     <string name="person_item_name">Item Name</string>
     <string name="person_item_cost">Cost</string>
     <string name="person_item_amount">Amount</string>
+    <string name="add_person_plus_symbol">+</string>
+    <string name="add_person_text">Add Person</string>
+    <string name="person_order_name">Order</string>
+    <string name="person_order_cost">0</string>
+    <string name="person_order_multiple_symbol">x</string>
+    <string name="person_order_multiple_amount">0</string>
 </resources>

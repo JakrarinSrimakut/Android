@@ -54,6 +54,23 @@
                 android:text="@string/person_item_amount"
                 android:layout_weight="1"/>
         </LinearLayout>
+
+        <!--Item list here-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/colorAddPerson">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_person_plus_symbol"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_person_text"/>
+
+        </LinearLayout>
     </LinearLayout>
 
 
