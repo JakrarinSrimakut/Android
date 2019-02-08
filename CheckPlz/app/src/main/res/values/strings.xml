@@ -14,6 +14,8 @@
     <string name="person_item_amount">Amount</string>
     <string name="add_person_plus_symbol">+</string>
     <string name="add_person_text">Add Person</string>
+    <string name="add_person_order_plus_symbol">+</string>
+    <string name="add_person_order_text">Add Order</string>
     <string name="person_order_name">Order</string>
     <string name="person_order_cost">0</string>
     <string name="person_order_multiple_symbol">x</string>

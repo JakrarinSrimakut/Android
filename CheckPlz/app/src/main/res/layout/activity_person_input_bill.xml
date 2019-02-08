@@ -64,11 +64,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_person_plus_symbol"/>
+                android:text="@string/add_person_order_plus_symbol"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_person_text"/>
+                android:text="@string/add_person_order_text"/>
 
         </LinearLayout>
     </LinearLayout>
