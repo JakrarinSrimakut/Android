@@ -5,9 +5,9 @@ import java.util.LinkedHashMap;
 public class PersonBill {
     private String mName;
     private static int personCount=1;
-    private int mTotalBill;
-    private int mTax;
-    private int mTip;
+    private double mTotalBill;
+    private double mTax;
+    private double mTip;
     private LinkedHashMap<String, Integer> mItemList = new LinkedHashMap<>();
 
     public PersonBill(){
@@ -26,7 +26,7 @@ public class PersonBill {
         this.mName = mName;
     }
 
-    public int getmTotalBill() {
+    public double getmTotalBill() {
         return mTotalBill;
     }
 
@@ -34,7 +34,7 @@ public class PersonBill {
         this.mTotalBill = mTotalBill;
     }
 
-    public int getmTax() {
+    public double getmTax() {
         return mTax;
     }
 
@@ -42,7 +42,7 @@ public class PersonBill {
         this.mTax = mTax;
     }
 
-    public int getmTip() {
+    public double getmTip() {
         return mTip;
     }
 
@@ -50,6 +50,7 @@ public class PersonBill {
         this.mTip = mTip;
     }
 
+    //???????????
     public LinkedHashMap<String, Integer> getmItemList() {
         return mItemList;
     }
