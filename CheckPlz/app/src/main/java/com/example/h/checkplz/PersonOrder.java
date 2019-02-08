@@ -2,16 +2,16 @@ package com.example.h.checkplz;
 
 public class PersonOrder {
 
-    private String mDishName;
+    private String mOrderName;
     private double mCost;
-    private int mDishAmount;
-    private int dishCounter=1;
+    private int mOrderAmount;
+    private int orderCounter=1;
 
     public PersonOrder(){
-        mDishName="Dish"+dishCounter;
-        mDishAmount=0;
+        mOrderName="Order"+orderCounter;
+        mOrderAmount=0;
         mCost=0;
-        dishCounter++;
+        orderCounter++;
     }
 
     public double getmCost() {
@@ -22,19 +22,19 @@ public class PersonOrder {
         this.mCost = mCost;
     }
 
-    public int getmDishAmount() {
-        return mDishAmount;
+    public int getmOrderAmount() {
+        return mOrderAmount;
     }
 
-    public void setmDishAmount(int mDishAmount) {
-        this.mDishAmount = mDishAmount;
+    public void setmOrderAmount(int mOrderAmount) {
+        this.mOrderAmount = mOrderAmount;
     }
 
-    public String getmDishName() {
-        return mDishName;
+    public String getmOrderName() {
+        return mOrderName;
     }
 
-    public void setmDishName(String mDishName) {
-        this.mDishName = mDishName;
+    public void setmOrderName(String mOrderName) {
+        this.mOrderName = mOrderName;
     }
 }
