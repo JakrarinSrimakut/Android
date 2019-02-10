@@ -17,6 +17,22 @@ public class PersonInputBillActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("PersonInputBillActivity");
+
+        /*Init PersonBill to hold person name and person's orders in arraylist
+        * only when menu check list is click so as to not have to create then delete
+        * user click back button. But how about editing? When you edit and click check
+        * mark is clicked it will generate a new instance.
+        *
+        * How to populate PersonBill when it's sent here by intent? Send the PersonBill
+        * here then run methods to fill the activity
+        *
+        * To grab something. recyclerView.getAdapter().getList().get(position)
+         *
+         * Pass back PersonBill individually or as a List of Perosn Bill to
+         * PeopleBillListActivity? Individual is more efficient. No need to update
+         * entire list when it wasn't edited.
+         *
+         */
     }
 
     @Override

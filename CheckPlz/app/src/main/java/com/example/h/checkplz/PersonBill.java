@@ -1,5 +1,6 @@
 package com.example.h.checkplz;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class PersonBill {
@@ -9,6 +10,7 @@ public class PersonBill {
     private double mTax;
     private double mTip;
     private LinkedHashMap<String, Integer> mItemList = new LinkedHashMap<>();
+    private ArrayList<PersonOrder> mPersonOrders = new ArrayList<>();
 
     public PersonBill(){
         mName="Person"+personCount;

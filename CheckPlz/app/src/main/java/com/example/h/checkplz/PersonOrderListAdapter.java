@@ -39,11 +39,11 @@ public class PersonOrderListAdapter extends
     }
 
     // Store a member variable for the contacts
-    private List<PersonOrder> mpersonOrderList;
+    private List<PersonOrder> mPersonOrderList;
 
     // Pass in the contact array into the constructor
     public PersonOrderListAdapter(List<PersonOrder> personOrderList){
-        mpersonOrderList=personOrderList;
+        mPersonOrderList=personOrderList;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -65,7 +65,7 @@ public class PersonOrderListAdapter extends
     @Override
     public void onBindViewHolder( PersonOrderListAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
-        PersonOrder personOrder = mpersonOrderList.get(position);
+        PersonOrder personOrder = mPersonOrderList.get(position);
 
         // Set item views based on your views and data model
         EditText EditTextOrderName = viewHolder.personOrderNameEditText;
@@ -79,6 +79,11 @@ public class PersonOrderListAdapter extends
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {
-        return mpersonOrderList.size();
+        return mPersonOrderList.size();
+    }
+
+    // Return PersonOrder list
+    public List<PersonOrder> getList() {
+        return this.mPersonOrderList;
     }
 }
