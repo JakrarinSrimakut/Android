@@ -20,4 +20,5 @@
     <string name="person_order_cost">0</string>
     <string name="person_order_multiple_symbol">x</string>
     <string name="person_order_multiple_amount">0</string>
+    <string name="person_name_input_field">150dp</string>
 </resources>

@@ -22,9 +22,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name"/>
+
             <EditText
                 android:id="@+id/person_name_input_bill_activity"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 

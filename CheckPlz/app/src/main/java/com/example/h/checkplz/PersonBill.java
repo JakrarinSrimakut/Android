@@ -9,7 +9,6 @@ public class PersonBill {
     private double mTotalBill;
     private double mTax;
     private double mTip;
-    private LinkedHashMap<String, Integer> mItemList = new LinkedHashMap<>();
     private ArrayList<PersonOrder> mPersonOrders = new ArrayList<>();
 
     public PersonBill(){
@@ -52,12 +51,11 @@ public class PersonBill {
         this.mTip = mTip;
     }
 
-    //???????????
-    public LinkedHashMap<String, Integer> getmItemList() {
-        return mItemList;
+    public ArrayList<PersonOrder> getmPersonOrders() {
+        return mPersonOrders;
     }
 
-    public void setmItemList(LinkedHashMap<String, Integer> mItemList) {
-        this.mItemList = mItemList;
+    public void setmPersonOrders(ArrayList<PersonOrder> mPersonOrders) {
+        this.mPersonOrders = mPersonOrders;
     }
 }

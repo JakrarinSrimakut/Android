@@ -6,12 +6,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 public class PersonInputBillActivity extends AppCompatActivity {
     private PersonBill mPersonBill;
-
+    private EditText editName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,9 +22,10 @@ public class PersonInputBillActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("PersonInputBillActivity");
 
+        //Create recyclerView and adapter to be reference
+
         /*Init PersonBill to hold person name and person's orders in arraylist
-        * only when menu check list is click so as to not have to create then delete
-        * user click back button. But how about editing? When you edit and click check
+        * only when menu check list is click. But how about editing? When you edit and click check
         * mark it will generate a new instance. Answer: make a private PersonBill member
         * variable to set every different PersonBill
         *
@@ -53,8 +56,10 @@ public class PersonInputBillActivity extends AppCompatActivity {
             case R.id.action_done:
                 /*Init PersonBill by setting person's name and fill array of person's order*/
                 mPersonBill = new PersonBill();
-                mPersonBill.setmName();
-                PersonOrderListAdapter final mAdapter = (PersonOrderListAdapter) RecyclerView.getAdapter().getName();
+                mPersonBill.setmName(editName.getText().toString());
+                //PersonOrderListAdapter mAdapter = (PersonOrderListAdapter) RecyclerView.getAdapter().getList();
+
+                mPersonBill.setmPersonOrders((PersonOrderListAdapter) RecyclerView.getAdapter().getList());
 
                 Intent intent = new Intent(this, PeopleBillListActivity.class);
                 startActivity(intent);
