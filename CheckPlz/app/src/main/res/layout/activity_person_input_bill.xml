@@ -72,7 +72,11 @@
                 android:text="@string/add_person_order_text"/>
 
         </LinearLayout>
+
     </LinearLayout>
 
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_person_order_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </android.support.constraint.ConstraintLayout>
