@@ -64,14 +64,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:clickable="true"
+                android:id="@+id/add_order_layout"
                 android:background="@color/colorAddPerson">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20dp"
                     android:text="@string/add_person_order_plus_symbol"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20dp"
                     android:text="@string/add_person_order_text"/>
 
             </LinearLayout>
