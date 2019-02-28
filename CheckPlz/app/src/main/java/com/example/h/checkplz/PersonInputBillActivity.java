@@ -27,12 +27,12 @@ public class PersonInputBillActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("PersonInputBillActivity");
 
-        //editName=(EditText) findViewById(R.id.person_name_input_bill_activity);
+        editName=(EditText) findViewById(R.id.person_name_input_bill_activity);
         //Create recyclerView and adapter to be reference
         // Lookup the recyclerview in activity layout
         RecyclerView rvPersonOrdersList = (RecyclerView) findViewById(R.id.rv_person_order_list);
         
-        /*
+
         //Initialize Orders
         PersonOrder pOrder = new PersonOrder();
         personOrders.add(pOrder);
@@ -43,7 +43,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
         rvPersonOrdersList.setAdapter(adapter);
         //Set Layout manager to position the items
         rvPersonOrdersList.setLayoutManager(new LinearLayoutManager(this));
-        */
+
         
         /*Init PersonBill to hold person name and person's orders in arraylist
         * only when menu check list is click. But how about editing? When you edit and click check

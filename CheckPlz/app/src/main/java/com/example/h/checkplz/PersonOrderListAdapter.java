@@ -53,7 +53,7 @@ public class PersonOrderListAdapter extends
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.item_person, parent, false);
+        View contactView = inflater.inflate(R.layout.item_person_order, parent, false);
 
         // Return a new holder instance
         PersonOrderListAdapter.ViewHolder viewHolder = new PersonOrderListAdapter.ViewHolder(contactView);
