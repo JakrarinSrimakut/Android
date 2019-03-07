@@ -42,13 +42,23 @@ public class PersonInputBillActivity extends AppCompatActivity {
         personOrders.add(pOrder);
         personOrders.add(new PersonOrder());
         //Create adapter passing the sample user data
-        PersonOrderListAdapter adapter = new PersonOrderListAdapter(personOrders);
+        final PersonOrderListAdapter adapter = new PersonOrderListAdapter(personOrders);
         //Attach the adapter to the recyclerview to populate items
         rvPersonOrdersList.setAdapter(adapter);
         //Set Layout manager to position the items
         rvPersonOrdersList.setLayoutManager(new LinearLayoutManager(this));
 
+        LinearLayout addOrderLayout = (LinearLayout)findViewById(R.id.add_order_layout);
 
+        //Create new order
+        addOrderLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(PersonInputBillActivity.this, "Test", Toast.LENGTH_SHORT).show();
+                personOrders.add(new PersonOrder());
+                adapter.notifyItemInserted(adapter.getItemCount());//Make the view appear dynamically in recyclerview by notifying adapter of insertion.
+            }
+        });
         /*Init PersonBill to hold person name and person's orders in arraylist
         * only when menu check list is click. But how about editing? When you edit and click check
         * mark it will generate a new instance. Answer: make a private PersonBill member
@@ -72,16 +82,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LinearLayout addOrderLayout = (LinearLayout)findViewById(R.id.add_order_layout);
 
-        //Create new order
-        addOrderLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Toast.makeText(PersonInputBillActivity.this, "Test", Toast.LENGTH_SHORT).show();
-                personOrders.add(new PersonOrder());
-            }
-        });
     }
 
     @Override
