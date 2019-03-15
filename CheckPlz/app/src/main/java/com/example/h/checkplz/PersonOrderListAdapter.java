@@ -3,10 +3,12 @@ package com.example.h.checkplz;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -74,6 +76,18 @@ public class PersonOrderListAdapter extends
         EditTextOrderCost.setText(Double.toString(personOrder.getmOrderCost()));
         EditText EditTextOrderMultipleAmount = viewHolder.personOrderMultipleAmountEditText;
         EditTextOrderMultipleAmount.setText(Double.toString(personOrder.getmOrderAmount()));
+
+        //Set onTouchListener when view is hold down
+        viewHolder.itemView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction()==MotionEvent.ACTION_DOWN){
+                    Toast.makeText(view.getContext(), "View pushed down", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     // Returns the total count of items in the list

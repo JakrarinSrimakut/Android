@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -48,10 +49,10 @@ public class PersonInputBillActivity extends AppCompatActivity {
         //Set Layout manager to position the items
         rvPersonOrdersList.setLayoutManager(new LinearLayoutManager(this));
 
-        LinearLayout addOrderLayout = (LinearLayout)findViewById(R.id.add_order_layout);
+        Button addOrderButton = (Button) findViewById(R.id.add_order_button);
 
         //Create new order
-        addOrderLayout.setOnClickListener(new View.OnClickListener() {
+        addOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(PersonInputBillActivity.this, "Test", Toast.LENGTH_SHORT).show();
