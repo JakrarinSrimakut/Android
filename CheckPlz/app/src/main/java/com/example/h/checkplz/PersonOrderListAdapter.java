@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PersonOrderListAdapter extends
@@ -24,6 +27,7 @@ public class PersonOrderListAdapter extends
         public EditText personOrderCostEditText;
         public TextView personOrderMultipleSymbolTextView;
         public EditText personOrderMultipleAmountEditText;
+        public ImageView personOrderDelete;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -35,16 +39,15 @@ public class PersonOrderListAdapter extends
             personOrderCostEditText = (EditText) itemView.findViewById(R.id.person_order_cost);
             personOrderMultipleSymbolTextView = (TextView) itemView.findViewById(R.id.person_order_multiple_symbol);
             personOrderMultipleAmountEditText = (EditText) itemView.findViewById(R.id.person_order_multiple_amount);
-
-
+            personOrderDelete = (ImageView) itemView.findViewById(R.id.person_order_delete);
         }
     }
 
     // Store a member variable for the contacts
-    private List<PersonOrder> mPersonOrderList;
+    private ArrayList<PersonOrder> mPersonOrderList;
 
     // Pass in the contact array into the constructor
-    public PersonOrderListAdapter(List<PersonOrder> personOrderList){
+    public PersonOrderListAdapter(ArrayList<PersonOrder> personOrderList){
         mPersonOrderList=personOrderList;
     }
 
@@ -53,7 +56,6 @@ public class PersonOrderListAdapter extends
     public PersonOrderListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-
         // Inflate the custom layout
         View contactView = inflater.inflate(R.layout.item_person_order, parent, false);
 
@@ -65,17 +67,28 @@ public class PersonOrderListAdapter extends
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder( PersonOrderListAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(PersonOrderListAdapter.ViewHolder viewHolder, final int position) {
         // Get the data model based on position
         PersonOrder personOrder = mPersonOrderList.get(position);
+        //
 
+        ImageView imageViewDeleteOrder = viewHolder.personOrderDelete;
         // Set item views based on your views and data model
-        EditText EditTextOrderName = viewHolder.personOrderNameEditText;
-        EditTextOrderName.setText(personOrder.getmOrderName());
-        EditText EditTextOrderCost = viewHolder.personOrderCostEditText;
-        EditTextOrderCost.setText(Double.toString(personOrder.getmOrderCost()));
-        EditText EditTextOrderMultipleAmount = viewHolder.personOrderMultipleAmountEditText;
-        EditTextOrderMultipleAmount.setText(Double.toString(personOrder.getmOrderAmount()));
+        EditText editTextOrderName = viewHolder.personOrderNameEditText;
+        EditText editTextOrderCost = viewHolder.personOrderCostEditText;
+        EditText editTextOrderMultipleAmount = viewHolder.personOrderMultipleAmountEditText;
+
+        //Delete order
+        imageViewDeleteOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(view.getContext(), "View " + position +" delete image clicked", Toast.LENGTH_SHORT).show();
+                mPersonOrderList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, mPersonOrderList.size());
+            }
+        });
+        //
 
         //Set onTouchListener when view is hold down
         viewHolder.itemView.setOnTouchListener(new View.OnTouchListener() {
@@ -97,7 +110,7 @@ public class PersonOrderListAdapter extends
     }
 
     // Return PersonOrder list
-    public List<PersonOrder> getList() {
+    public ArrayList<PersonOrder> getList() {
         return this.mPersonOrderList;
     }
 }

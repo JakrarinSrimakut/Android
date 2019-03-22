@@ -5,13 +5,8 @@ public class PersonOrder {
     private String mOrderName;
     private double mOrderCost;
     private int mOrderAmount;
-    private int orderCounter=1;
 
     public PersonOrder(){
-        mOrderName="Order"+orderCounter;
-        mOrderAmount=0;
-        mOrderCost=0;
-        orderCounter++;
     }
 
     public double getmOrderCost() {

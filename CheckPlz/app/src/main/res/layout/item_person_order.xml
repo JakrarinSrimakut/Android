@@ -7,21 +7,23 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/person_order_name"
-        android:text="@string/person_order_name"
-        android:layout_weight="1"/>
+        android:hint="@string/person_order_name"
+        android:layout_weight="@string/person_order_name_weight"
+        android:maxLength="25"
+        android:singleLine="true"
+        android:inputType="textAutoCorrect"/>
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/person_order_cost"
-        android:text="@string/person_order_cost"
-        android:layout_weight="1"/>
+        android:hint="@string/person_order_cost"
+        android:layout_weight="@string/person_order_cost_weight"
+        android:maxLength="8"
+        android:inputType="numberDecimal"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,10 +31,17 @@
         android:text="@string/person_order_multiple_symbol"
         android:gravity="right"/>
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/person_order_multiple_amount"
-        android:text="@string/person_order_multiple_amount"
-        android:layout_weight="1"/>
+        android:hint="@string/person_order_multiple_amount"
+        android:layout_weight="@string/person_order_amount_weight"
+        android:maxLength="3"
+        android:inputType="number"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_delete_black_18dp"
+        android:id="@+id/person_order_delete"/>
 
 </LinearLayout>

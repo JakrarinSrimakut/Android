@@ -32,7 +32,8 @@
                 <EditText
                     android:id="@+id/person_name_input_bill_activity"
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:maxLength="14"/>
             </LinearLayout>
 
             <LinearLayout
@@ -41,28 +42,29 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/item_name"
+                    android:id="@+id/order_column_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="@string/person_order_name_weight"
                     android:gravity="center_horizontal"
-                    android:text="@string/person_item_name" />
+                    android:text="@string/person_order_column_name"/>
 
                 <TextView
-                    android:id="@+id/item_cost"
+                    android:id="@+id/order_column_cost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="@string/person_order_cost_weight"
                     android:gravity="center_horizontal"
-                    android:text="@string/person_item_cost" />
+                    android:text="@string/person_order_column_cost" />
 
                 <TextView
-                    android:id="@+id/item_amount"
+                    android:id="@+id/order_column_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="@string/person_order_amount_weight"
                     android:gravity="center_horizontal"
-                    android:text="@string/person_item_amount" />
+                    android:text="@string/person_order_column_amount"
+                    android:paddingRight="20dp"/>
             </LinearLayout>
 
         </LinearLayout>
