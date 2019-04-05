@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,7 +23,10 @@ public class PersonInputBillActivity extends AppCompatActivity {
     private ArrayList<PersonOrder> personOrders = new ArrayList<>();
     private PersonBill mPersonBill;
     private EditText editName;
-    
+    public TextView totalAmount;
+    PersonOrderListAdapter adapter;
+    Integer[] enteredNumber = new Integer[1000];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,18 +36,27 @@ public class PersonInputBillActivity extends AppCompatActivity {
         actionBar.setTitle("PersonInputBillActivity");
 
         editName=(EditText) findViewById(R.id.person_name_input_bill_activity);
+        totalAmount=(TextView) findViewById(R.id.person_total_amount);
 
         //Create recyclerView and adapter to be reference
         // Lookup the recyclerview in activity layout
         RecyclerView rvPersonOrdersList = (RecyclerView) findViewById(R.id.rv_person_order_list);
         
-
+        setItems();
         //Initialize Orders
         PersonOrder pOrder = new PersonOrder();
         personOrders.add(pOrder);
         personOrders.add(new PersonOrder());
         //Create adapter passing the sample user data
-        final PersonOrderListAdapter adapter = new PersonOrderListAdapter(personOrders);
+        adapter = new PersonOrderListAdapter(personOrders, new OnEditTextChanged(){
+
+            @Override
+            public void onTextChanged(int position, String charSeq) {
+                Log.d("TAG", "Postion" + position + " " + charSeq);
+                enteredNumber[position] = Integer.valueOf(charSeq);
+                updateTotalValue();
+            }
+        });
         //Attach the adapter to the recyclerview to populate items
         rvPersonOrdersList.setAdapter(adapter);
         //Set Layout manager to position the items
@@ -55,7 +68,6 @@ public class PersonInputBillActivity extends AppCompatActivity {
         addOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(PersonInputBillActivity.this, "Test", Toast.LENGTH_SHORT).show();
                 personOrders.add(new PersonOrder());
                 adapter.notifyItemInserted(adapter.getItemCount());//Make the view appear dynamically in recyclerview by notifying adapter of insertion.
             }
@@ -77,6 +89,21 @@ public class PersonInputBillActivity extends AppCompatActivity {
          * a constructor for taking a list of PersonOrder.
          *
          */
+    }
+
+    private void setItems() {
+        for(int i=0; i<1000; i++){
+            enteredNumber[i]=0;
+        }
+    }
+
+    private void updateTotalValue() {
+        int sum = 0;
+
+        for(int i = 0; i<1000; i++){
+            sum += enteredNumber[i];
+        }
+        totalAmount.setText(String.valueOf(sum));
     }
 
 

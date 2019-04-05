@@ -2,6 +2,8 @@ package com.example.h.checkplz;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +19,8 @@ import java.util.List;
 
 public class PersonOrderListAdapter extends
         RecyclerView.Adapter<PersonOrderListAdapter.ViewHolder>{
+
+    private OnEditTextChanged onEditTextChanged;
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -47,8 +51,9 @@ public class PersonOrderListAdapter extends
     private ArrayList<PersonOrder> mPersonOrderList;
 
     // Pass in the contact array into the constructor
-    public PersonOrderListAdapter(ArrayList<PersonOrder> personOrderList){
+    public PersonOrderListAdapter(ArrayList<PersonOrder> personOrderList, OnEditTextChanged onEditTextChanged){
         mPersonOrderList=personOrderList;
+        this.onEditTextChanged = onEditTextChanged;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -78,6 +83,20 @@ public class PersonOrderListAdapter extends
         EditText editTextOrderCost = viewHolder.personOrderCostEditText;
         EditText editTextOrderMultipleAmount = viewHolder.personOrderMultipleAmountEditText;
 
+        viewHolder.personOrderCostEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                onEditTextChanged.onTextChanged(position, charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+
         //Delete order
         imageViewDeleteOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,19 +107,7 @@ public class PersonOrderListAdapter extends
                 notifyItemRangeChanged(position, mPersonOrderList.size());
             }
         });
-        //
 
-        //Set onTouchListener when view is hold down
-        viewHolder.itemView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction()==MotionEvent.ACTION_DOWN){
-                    Toast.makeText(view.getContext(), "View pushed down", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 
     // Returns the total count of items in the list
