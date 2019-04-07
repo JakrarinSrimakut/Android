@@ -25,7 +25,8 @@ public class PersonInputBillActivity extends AppCompatActivity {
     private EditText editName;
     public TextView totalAmount;
     PersonOrderListAdapter adapter;
-    Integer[] enteredNumber = new Integer[1000];
+    int maxEnterNumber = 1000;//Max amount of orders (rows for RV)
+    Double[] enteredNumberCost = new Double[maxEnterNumber];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(int position, String charSeq) {
                 Log.d("TAG", "Postion" + position + " " + charSeq);
-                enteredNumber[position] = Integer.valueOf(charSeq);
+                enteredNumberCost[position] = Double.valueOf(charSeq); //Keep track of the the value change for total
                 updateTotalValue();
             }
         });
@@ -92,16 +93,16 @@ public class PersonInputBillActivity extends AppCompatActivity {
     }
 
     private void setItems() {
-        for(int i=0; i<1000; i++){
-            enteredNumber[i]=0;
+        for(int i=0; i<maxEnterNumber; i++){
+            enteredNumberCost[i]=0.00;
         }
     }
 
     private void updateTotalValue() {
-        int sum = 0;
+        double sum = 0;
 
-        for(int i = 0; i<1000; i++){
-            sum += enteredNumber[i];
+        for(int i = 0; i<maxEnterNumber; i++){
+            sum += enteredNumberCost[i];
         }
         totalAmount.setText(String.valueOf(sum));
     }
