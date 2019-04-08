@@ -21,6 +21,7 @@ public class PersonOrderListAdapter extends
         RecyclerView.Adapter<PersonOrderListAdapter.ViewHolder>{
 
     private OnEditTextChanged onEditTextChanged;
+    public static int viewID; //Use to keep tab of EditText being changed so PersonInpuTBillActivity can set the correct value to it's respective array.
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -72,7 +73,7 @@ public class PersonOrderListAdapter extends
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(PersonOrderListAdapter.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final PersonOrderListAdapter.ViewHolder viewHolder, final int position) {
         // Get the data model based on position
         PersonOrder personOrder = mPersonOrderList.get(position);
         //
@@ -80,12 +81,15 @@ public class PersonOrderListAdapter extends
         ImageView imageViewDeleteOrder = viewHolder.personOrderDelete;
         // Set item views based on your views and data model
         EditText editTextOrderName = viewHolder.personOrderNameEditText;
-        EditText editTextOrderCost = viewHolder.personOrderCostEditText;
-        EditText editTextOrderMultipleAmount = viewHolder.personOrderMultipleAmountEditText;
+        final EditText editTextOrderCost = viewHolder.personOrderCostEditText;
+        final EditText editTextOrderMultipleAmount = viewHolder.personOrderMultipleAmountEditText;
 
+        //Set text changelistenor for personOrderCostEditText
         viewHolder.personOrderCostEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                viewID = editTextOrderCost.getId();
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -93,7 +97,24 @@ public class PersonOrderListAdapter extends
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {}
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        //Set text changelistenor for personOrderMultipleAmountEditText
+        viewHolder.personOrderMultipleAmountEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                viewID = editTextOrderMultipleAmount.getId();}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                onEditTextChanged.onTextChanged(position, charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
         });
 
 

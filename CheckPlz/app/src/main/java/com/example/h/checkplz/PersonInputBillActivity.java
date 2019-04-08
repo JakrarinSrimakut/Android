@@ -54,7 +54,18 @@ public class PersonInputBillActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(int position, String charSeq) {
                 Log.d("TAG", "Postion" + position + " " + charSeq);
-                enteredNumberCost[position] = Double.valueOf(charSeq); //Keep track of the the value change for total
+                switch (PersonOrderListAdapter.viewID){
+                    case R.id.person_order_cost:
+                        Log.d("person_order_cost", "adapter:" +PersonOrderListAdapter.viewID+" cost ID:" + R.id.person_order_cost);
+
+                        enteredNumberCost[position] = Double.valueOf(charSeq); //Keep track of the the value change for total
+                        break;
+                    case R.id.person_order_multiple_amount:
+                        Log.d("person_amount", "adapter:" +PersonOrderListAdapter.viewID+" amount ID:" + R.id.person_order_multiple_amount);
+
+                        break;
+                    default:
+                }
                 updateTotalValue();
             }
         });
@@ -102,7 +113,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
         double sum = 0;
 
         for(int i = 0; i<maxEnterNumber; i++){
-            sum += enteredNumberCost[i];
+            sum += enteredNumberCost[i] ;
         }
         totalAmount.setText(String.valueOf(sum));
     }
