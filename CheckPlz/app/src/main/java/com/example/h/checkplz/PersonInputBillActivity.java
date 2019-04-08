@@ -27,6 +27,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
     PersonOrderListAdapter adapter;
     int maxEnterNumber = 1000;//Max amount of orders (rows for RV)
     Double[] enteredNumberCost = new Double[maxEnterNumber];
+    Integer[] enteredNumberMultipleAmount = new Integer[maxEnterNumber];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +58,19 @@ public class PersonInputBillActivity extends AppCompatActivity {
                 switch (PersonOrderListAdapter.viewID){
                     case R.id.person_order_cost:
                         Log.d("person_order_cost", "adapter:" +PersonOrderListAdapter.viewID+" cost ID:" + R.id.person_order_cost);
-
+                        if(charSeq.equals("")){
+                            enteredNumberCost[position]=0.0;
+                            break;
+                        }
                         enteredNumberCost[position] = Double.valueOf(charSeq); //Keep track of the the value change for total
                         break;
                     case R.id.person_order_multiple_amount:
                         Log.d("person_amount", "adapter:" +PersonOrderListAdapter.viewID+" amount ID:" + R.id.person_order_multiple_amount);
-
+                        if(charSeq.equals("")){
+                            enteredNumberMultipleAmount[position]=1;
+                            break;
+                        }
+                        enteredNumberMultipleAmount[position] = Integer.valueOf(charSeq);
                         break;
                     default:
                 }
@@ -106,6 +114,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
     private void setItems() {
         for(int i=0; i<maxEnterNumber; i++){
             enteredNumberCost[i]=0.00;
+            enteredNumberMultipleAmount[i]=1;
         }
     }
 
@@ -113,7 +122,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
         double sum = 0;
 
         for(int i = 0; i<maxEnterNumber; i++){
-            sum += enteredNumberCost[i] ;
+            sum += enteredNumberCost[i] * enteredNumberMultipleAmount[i] ;
         }
         totalAmount.setText(String.valueOf(sum));
     }
