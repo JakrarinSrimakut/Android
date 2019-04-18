@@ -1,7 +1,11 @@
 package com.example.h.checkplz;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -92,6 +96,10 @@ public class PersonInputBillActivity extends AppCompatActivity {
                 adapter.notifyItemInserted(adapter.getItemCount());//Make the view appear dynamically in recyclerview by notifying adapter of insertion.
             }
         });
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter("delete-order"));
+
         /*Init PersonBill to hold person name and person's orders in arraylist
         * only when menu check list is click. But how about editing? When you edit and click check
         * mark it will generate a new instance. Answer: make a private PersonBill member
@@ -111,6 +119,18 @@ public class PersonInputBillActivity extends AppCompatActivity {
          */
     }
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int position = intent.getIntExtra("position", 0);
+            Log.d("delete-order-received", "position: " + position + " received");
+            enteredNumberCost[position]=0.0;
+            enteredNumberMultipleAmount[position]=1;
+            updateTotalValue();
+
+        }
+    };
+
     private void setItems() {
         for(int i=0; i<maxEnterNumber; i++){
             enteredNumberCost[i]=0.00;
@@ -124,6 +144,8 @@ public class PersonInputBillActivity extends AppCompatActivity {
         for(int i = 0; i<maxEnterNumber; i++){
             sum += enteredNumberCost[i] * enteredNumberMultipleAmount[i] ;
         }
+        //output log.d of array value here to see value adding to sum
+
         totalAmount.setText(String.valueOf(sum));
     }
 

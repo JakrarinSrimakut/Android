@@ -1,9 +1,12 @@
 package com.example.h.checkplz;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -76,13 +79,15 @@ public class PersonOrderListAdapter extends
     public void onBindViewHolder(final PersonOrderListAdapter.ViewHolder viewHolder, final int position) {
         // Get the data model based on position
         PersonOrder personOrder = mPersonOrderList.get(position);
-        //
 
         ImageView imageViewDeleteOrder = viewHolder.personOrderDelete;
+
         // Set item views based on your views and data model
         EditText editTextOrderName = viewHolder.personOrderNameEditText;
         final EditText editTextOrderCost = viewHolder.personOrderCostEditText;
         final EditText editTextOrderMultipleAmount = viewHolder.personOrderMultipleAmountEditText;
+
+        final Intent intent = new Intent("delete-order");
 
         //Set text changelistenor for personOrderCostEditText
         viewHolder.personOrderCostEditText.addTextChangedListener(new TextWatcher() {
@@ -122,10 +127,24 @@ public class PersonOrderListAdapter extends
         imageViewDeleteOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int currentPosition = viewHolder.getAdapterPosition();//gets updated position
+                Log.d("delete-order-position", String.valueOf(currentPosition));
+                //update text view of order cost and amount
+                editTextOrderCost.setText("");
+                editTextOrderMultipleAmount.setText("");
+
                 //Toast.makeText(view.getContext(), "View " + position +" delete image clicked", Toast.LENGTH_SHORT).show();
-                mPersonOrderList.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, mPersonOrderList.size());
+                mPersonOrderList.remove(currentPosition);
+                notifyItemRemoved(currentPosition);
+
+
+
+                //update total order with intent of position that has been deleted
+                intent.putExtra("position", currentPosition);
+                LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
+                Log.d("delete-order-sent", "position " + currentPosition +" sent");
+
+
             }
         });
 
