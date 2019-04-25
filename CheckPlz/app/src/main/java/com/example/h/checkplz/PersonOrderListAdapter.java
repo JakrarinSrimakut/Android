@@ -25,6 +25,11 @@ public class PersonOrderListAdapter extends
 
     private OnEditTextChanged onEditTextChanged;
     public static int viewID; //Use to keep tab of EditText being changed so PersonInpuTBillActivity can set the correct value to it's respective array.
+    final String PERSON_ORDER_LIST = "mPersonOrderList";
+    final String DELETE_ORDER = "delete-order";
+    final String UPDATE_ORDER_NAME = "update-order-name";
+    final String UPDATE_ORDER_COST = "update-order-cost";
+    final String UPDATE_ORDER_AMOUNT = "update-order-amount";
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -78,7 +83,7 @@ public class PersonOrderListAdapter extends
     @Override
     public void onBindViewHolder(final PersonOrderListAdapter.ViewHolder viewHolder, final int position) {
         // Get the data model based on position
-        PersonOrder personOrder = mPersonOrderList.get(position);
+        final PersonOrder personOrder = mPersonOrderList.get(position);
 
         ImageView imageViewDeleteOrder = viewHolder.personOrderDelete;
 
@@ -87,7 +92,9 @@ public class PersonOrderListAdapter extends
         final EditText editTextOrderCost = viewHolder.personOrderCostEditText;
         final EditText editTextOrderMultipleAmount = viewHolder.personOrderMultipleAmountEditText;
 
-        final Intent intent = new Intent("delete-order");
+        final Intent intent = new Intent(DELETE_ORDER);
+
+        //TODO: Change listener for PersonOrderList name
 
         //Set text changelistenor for personOrderCostEditText
         viewHolder.personOrderCostEditText.addTextChangedListener(new TextWatcher() {
@@ -103,6 +110,10 @@ public class PersonOrderListAdapter extends
 
             @Override
             public void afterTextChanged(Editable editable) {
+                //set text to person order and update persorOrderlist
+                //TODO:update personOrderList position cost
+                personOrder.setmOrderCost(Integer.parseInt(onEditTextChanged.toString()));
+                mPersonOrderList.set(position, personOrder);
             }
         });
 
@@ -119,6 +130,8 @@ public class PersonOrderListAdapter extends
 
             @Override
             public void afterTextChanged(Editable editable) {
+                //TODO: update personOrderList position amount
+
             }
         });
 
@@ -138,9 +151,11 @@ public class PersonOrderListAdapter extends
                 notifyItemRemoved(currentPosition);
 
 
-
-                //update total order with intent of position that has been deleted
+                //broadcast updated mPersonOrderlist
                 intent.putExtra("position", currentPosition);
+                //new broadcast
+                intent.putParcelableArrayListExtra(PERSON_ORDER_LIST, mPersonOrderList);
+
                 LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
                 Log.d("delete-order-sent", "position " + currentPosition +" sent");
 

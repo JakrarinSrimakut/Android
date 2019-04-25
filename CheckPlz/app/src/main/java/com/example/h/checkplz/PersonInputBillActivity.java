@@ -22,16 +22,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PersonInputBillActivity extends AppCompatActivity {
+    final String DELETE_ORDER = "delete-order";
+    final String UPDATE_ORDER_NAME = "update-order-name";
+    final String UPDATE_ORDER_COST = "update-order-cost";
+    final String UPDATE_ORDER_AMOUNT = "update-order-amount";
     private ArrayList<PersonOrder> personOrders = new ArrayList<>();
     private PersonBill mPersonBill;
     private EditText editName;
+    private ArrayList<PersonOrder> mPersonOrderList;
     public TextView totalAmount;
     PersonOrderListAdapter adapter;
     int maxEnterNumber = 1000;//Max amount of orders (rows for RV)
     Double[] enteredNumberCost = new Double[maxEnterNumber];
     Integer[] enteredNumberMultipleAmount = new Integer[maxEnterNumber];
+    IntentFilter filterDeleteOrder = new IntentFilter(DELETE_ORDER);
+    //TODO:INTENT FILTER FOR UPDATE ORDER NAME,COST,AMOUNT
+    IntentFilter filterOrderName = new IntentFilter(UPDATE_ORDER_NAME);
+    IntentFilter filterOrderCost = new IntentFilter(UPDATE_ORDER_COST);
+    IntentFilter filterOrderAmount = new IntentFilter(UPDATE_ORDER_AMOUNT);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,36 +59,37 @@ public class PersonInputBillActivity extends AppCompatActivity {
         // Lookup the recyclerview in activity layout
         RecyclerView rvPersonOrdersList = (RecyclerView) findViewById(R.id.rv_person_order_list);
         
-        setItems();
+        //setItems();
+
         //Initialize Orders
         PersonOrder pOrder = new PersonOrder();
         personOrders.add(pOrder);
         personOrders.add(new PersonOrder());
         //Create adapter passing the sample user data
-        adapter = new PersonOrderListAdapter(personOrders, new OnEditTextChanged(){
+        adapter = new PersonOrderListAdapter(personOrders, new OnEditTextChanged(){//onEdiTextChanged is in sync with the on in adapter?
 
             @Override
             public void onTextChanged(int position, String charSeq) {
                 Log.d("TAG", "Postion" + position + " " + charSeq);
-                switch (PersonOrderListAdapter.viewID){
-                    case R.id.person_order_cost:
-                        Log.d("person_order_cost", "adapter:" +PersonOrderListAdapter.viewID+" cost ID:" + R.id.person_order_cost);
-                        if(charSeq.equals("")){
-                            enteredNumberCost[position]=0.0;
-                            break;
-                        }
-                        enteredNumberCost[position] = Double.valueOf(charSeq); //Keep track of the the value change for total
-                        break;
-                    case R.id.person_order_multiple_amount:
-                        Log.d("person_amount", "adapter:" +PersonOrderListAdapter.viewID+" amount ID:" + R.id.person_order_multiple_amount);
-                        if(charSeq.equals("")){
-                            enteredNumberMultipleAmount[position]=1;
-                            break;
-                        }
-                        enteredNumberMultipleAmount[position] = Integer.valueOf(charSeq);
-                        break;
-                    default:
-                }
+//                switch (PersonOrderListAdapter.viewID){//viewID is used to find the edittext of the position
+//                    case R.id.person_order_cost:
+//                        Log.d("person_order_cost", "adapter:" +PersonOrderListAdapter.viewID+" cost ID:" + R.id.person_order_cost);
+//                        if(charSeq.equals("")){
+//                            enteredNumberCost[position]=0.0;
+//                            break;
+//                        }
+//                        enteredNumberCost[position] = Double.valueOf(charSeq); //Keep track of the the value change for total
+//                        break;
+//                    case R.id.person_order_multiple_amount:
+//                        Log.d("person_amount", "adapter:" +PersonOrderListAdapter.viewID+" amount ID:" + R.id.person_order_multiple_amount);
+//                        if(charSeq.equals("")){
+//                            enteredNumberMultipleAmount[position]=1;
+//                            break;
+//                        }
+//                        enteredNumberMultipleAmount[position] = Integer.valueOf(charSeq);
+//                        break;
+//                    default:
+//                }
                 updateTotalValue();
             }
         });
@@ -97,8 +109,10 @@ public class PersonInputBillActivity extends AppCompatActivity {
             }
         });
 
+        //TODO: REGSISTER MULTIPLE BROADCAST RECEIVERS? OR 1 AND INTENTFILTER TO IT?
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter("delete-order"));
+                new IntentFilter(DELETE_ORDER));
 
         /*Init PersonBill to hold person name and person's orders in arraylist
         * only when menu check list is click. But how about editing? When you edit and click check
@@ -118,15 +132,19 @@ public class PersonInputBillActivity extends AppCompatActivity {
          *
          */
     }
+    //TODO: RECEIVER FOR EACH UPDATE FOR ORDER NAME,COST,AMOUNT?
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             int position = intent.getIntExtra("position", 0);
-            Log.d("delete-order-received", "position: " + position + " received");
-            enteredNumberCost[position]=0.0;
-            enteredNumberMultipleAmount[position]=1;
+            mPersonOrderList = intent.getParcelableArrayListExtra( "mPersonOrderList");
+
+            //enteredNumberCost[position]=0.0;
+            //enteredNumberMultipleAmount[position]=1;
             updateTotalValue();
+
+            Log.d("delete-order-received", "position: " + position + " received");
 
         }
     };
@@ -141,11 +159,16 @@ public class PersonInputBillActivity extends AppCompatActivity {
     private void updateTotalValue() {
         double sum = 0;
 
+        /*
         for(int i = 0; i<maxEnterNumber; i++){
             sum += enteredNumberCost[i] * enteredNumberMultipleAmount[i] ;
         }
-        //output log.d of array value here to see value adding to sum
+        */
 
+        Iterator<PersonOrder> iter=mPersonOrderList.iterator();
+        while(iter.hasNext()){
+            sum += iter.next().getmOrderCost() * iter.next().getmOrderAmount();
+        }
         totalAmount.setText(String.valueOf(sum));
     }
 
