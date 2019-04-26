@@ -92,20 +92,45 @@ public class PersonOrderListAdapter extends
         final EditText editTextOrderCost = viewHolder.personOrderCostEditText;
         final EditText editTextOrderMultipleAmount = viewHolder.personOrderMultipleAmountEditText;
 
-        final Intent intent = new Intent(DELETE_ORDER);
+        final Intent intentDelete = new Intent(DELETE_ORDER);
+        final Intent intentName = new Intent(UPDATE_ORDER_NAME);
+        final Intent intentOrderCost = new Intent(UPDATE_ORDER_COST);
+        final Intent intentOrderAmount = new Intent(UPDATE_ORDER_AMOUNT);
 
         //TODO: Change listener for PersonOrderList name
+
+        //Set text changelistenor for personOrderCostEditText
+        viewHolder.personOrderNameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //viewID = editTextOrderCost.getId();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //onEditTextChanged.onTextChanged(position, charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                //set text to person order and update persorOrderlist
+                //TODO:update personOrderList position cost
+                personOrder.setmOrderName(onEditTextChanged.toString());
+                mPersonOrderList.set(position, personOrder);
+                //TODO:send intent to person Input Bill Activity
+            }
+        });
 
         //Set text changelistenor for personOrderCostEditText
         viewHolder.personOrderCostEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                viewID = editTextOrderCost.getId();
+//                viewID = editTextOrderCost.getId();
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                onEditTextChanged.onTextChanged(position, charSequence.toString());
+//                onEditTextChanged.onTextChanged(position, charSequence.toString());
             }
 
             @Override
@@ -121,11 +146,12 @@ public class PersonOrderListAdapter extends
         viewHolder.personOrderMultipleAmountEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                viewID = editTextOrderMultipleAmount.getId();}
+//                viewID = editTextOrderMultipleAmount.getId();
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                onEditTextChanged.onTextChanged(position, charSequence.toString());
+//                onEditTextChanged.onTextChanged(position, charSequence.toString());
             }
 
             @Override
@@ -152,11 +178,11 @@ public class PersonOrderListAdapter extends
 
 
                 //broadcast updated mPersonOrderlist
-                intent.putExtra("position", currentPosition);
+                intentDelete.putExtra("position", currentPosition);
                 //new broadcast
-                intent.putParcelableArrayListExtra(PERSON_ORDER_LIST, mPersonOrderList);
+                intentDelete.putParcelableArrayListExtra(PERSON_ORDER_LIST, mPersonOrderList);
 
-                LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intentDelete);
                 Log.d("delete-order-sent", "position " + currentPosition +" sent");
 
 

@@ -111,9 +111,14 @@ public class PersonInputBillActivity extends AppCompatActivity {
 
         //TODO: REGSISTER MULTIPLE BROADCAST RECEIVERS? OR 1 AND INTENTFILTER TO IT?
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageDeleteReceiver,
                 new IntentFilter(DELETE_ORDER));
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageOrderNameReceiver,
+                new IntentFilter(UPDATE_ORDER_NAME));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageOrderCostReceiver,
+                new IntentFilter(UPDATE_ORDER_COST));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageOrderAmountReceiver,
+                new IntentFilter(UPDATE_ORDER_AMOUNT));
         /*Init PersonBill to hold person name and person's orders in arraylist
         * only when menu check list is click. But how about editing? When you edit and click check
         * mark it will generate a new instance. Answer: make a private PersonBill member
@@ -134,7 +139,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
     }
     //TODO: RECEIVER FOR EACH UPDATE FOR ORDER NAME,COST,AMOUNT?
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mMessageDeleteReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             int position = intent.getIntExtra("position", 0);
@@ -145,6 +150,33 @@ public class PersonInputBillActivity extends AppCompatActivity {
             updateTotalValue();
 
             Log.d("delete-order-received", "position: " + position + " received");
+
+        }
+    };
+
+    private BroadcastReceiver mMessageOrderNameReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+
+
+        }
+    };
+
+    private BroadcastReceiver mMessageOrderCostReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+
+
+        }
+    };
+
+    private BroadcastReceiver mMessageOrderAmountReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+
 
         }
     };
