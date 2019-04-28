@@ -25,7 +25,7 @@ public class PersonOrderListAdapter extends
 
     private OnEditTextChanged onEditTextChanged;
     public static int viewID; //Use to keep tab of EditText being changed so PersonInpuTBillActivity can set the correct value to it's respective array.
-    final String PERSON_ORDER_LIST = "mPersonOrderList";
+    final String PERSON_ORDER_LIST = "person-order-list";
     final String DELETE_ORDER = "delete-order";
     final String UPDATE_ORDER_NAME = "update-order-name";
     final String UPDATE_ORDER_COST = "update-order-cost";
@@ -109,15 +109,21 @@ public class PersonOrderListAdapter extends
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //onEditTextChanged.onTextChanged(position, charSequence.toString());
+//                Toast.makeText(viewHolder.personOrderNameEditText.getContext(), "Ordername editing onTextChanged", Toast.LENGTH_SHORT ).show();
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 //set text to person order and update persorOrderlist
-                //TODO:update personOrderList position cost
-                personOrder.setmOrderName(onEditTextChanged.toString());
-                mPersonOrderList.set(position, personOrder);
-                //TODO:send intent to person Input Bill Activity
+//                personOrder.setmOrderName(onEditTextChanged.toString());
+//                mPersonOrderList.set(position, personOrder);
+//                //TODO:send intent to person Input Bill Activity
+//                //TODO:create method for intent being used so all listeners can call it
+//                intentName.putParcelableArrayListExtra(PERSON_ORDER_LIST, mPersonOrderList);
+//                LocalBroadcastManager.getInstance(viewHolder.personOrderNameEditText.getContext()).sendBroadcast(intentName);
+//                Toast.makeText(viewHolder.personOrderNameEditText.getContext(), "Ordername edititing", Toast.LENGTH_SHORT ).show();
+
             }
         });
 
@@ -136,9 +142,8 @@ public class PersonOrderListAdapter extends
             @Override
             public void afterTextChanged(Editable editable) {
                 //set text to person order and update persorOrderlist
-                //TODO:update personOrderList position cost
-                personOrder.setmOrderCost(Integer.parseInt(onEditTextChanged.toString()));
-                mPersonOrderList.set(position, personOrder);
+//                personOrder.setmOrderCost(Integer.parseInt(onEditTextChanged.toString()));
+//                mPersonOrderList.set(position, personOrder);
             }
         });
 
@@ -167,16 +172,17 @@ public class PersonOrderListAdapter extends
             @Override
             public void onClick(View view) {
                 int currentPosition = viewHolder.getAdapterPosition();//gets updated position
-                Log.d("delete-order-position", String.valueOf(currentPosition));
                 //update text view of order cost and amount
                 editTextOrderCost.setText("");
                 editTextOrderMultipleAmount.setText("");
 
-                //Toast.makeText(view.getContext(), "View " + position +" delete image clicked", Toast.LENGTH_SHORT).show();
+                //delete item and update person order list
                 mPersonOrderList.remove(currentPosition);
                 notifyItemRemoved(currentPosition);
 
-
+                for( int i=0; i<mPersonOrderList.size(); i++) {
+                    Log.d("person order list", "Adapter:" + mPersonOrderList.get(i).getmOrderName()+i);
+                }
                 //broadcast updated mPersonOrderlist
                 intentDelete.putExtra("position", currentPosition);
                 //new broadcast

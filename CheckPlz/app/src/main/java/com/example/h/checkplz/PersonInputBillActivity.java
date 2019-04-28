@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class PersonInputBillActivity extends AppCompatActivity {
+    final String PERSON_ORDER_LIST = "person-order-list";
     final String DELETE_ORDER = "delete-order";
     final String UPDATE_ORDER_NAME = "update-order-name";
     final String UPDATE_ORDER_COST = "update-order-cost";
@@ -143,13 +144,19 @@ public class PersonInputBillActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             int position = intent.getIntExtra("position", 0);
-            mPersonOrderList = intent.getParcelableArrayListExtra( "mPersonOrderList");
 
-            //enteredNumberCost[position]=0.0;
-            //enteredNumberMultipleAmount[position]=1;
-            updateTotalValue();
+            mPersonOrderList = intent.getParcelableArrayListExtra(PERSON_ORDER_LIST);
+            for( int i=0; i<mPersonOrderList.size(); i++) {
+                Log.d("person order list", "Activity:"+ mPersonOrderList.get(i).getmOrderName()+i);
+            }
+//            mPersonOrderList = intent.getParcelableArrayListExtra( "mPersonOrderList");
+//
+//            //enteredNumberCost[position]=0.0;
+//            //enteredNumberMultipleAmount[position]=1;
+//            updateTotalValue();
+//
 
-            Log.d("delete-order-received", "position: " + position + " received");
+           Log.d("delete-order-received", "position: " + position + " received");
 
         }
     };
@@ -157,7 +164,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageOrderNameReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
+        Log.d("order-name-recievd", "received!");
 
 
         }

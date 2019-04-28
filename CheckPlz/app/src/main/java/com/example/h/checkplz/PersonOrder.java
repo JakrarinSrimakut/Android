@@ -12,6 +12,9 @@ public class PersonOrder implements Parcelable {
     private int mOrderAmount;
 
     public PersonOrder(){
+        mOrderName="Person order";
+        mOrderCost=0;
+        mOrderAmount=0;
     }
 
     protected PersonOrder(Parcel in) {
