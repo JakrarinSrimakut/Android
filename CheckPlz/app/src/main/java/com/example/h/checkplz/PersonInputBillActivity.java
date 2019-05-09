@@ -106,7 +106,8 @@ public class PersonInputBillActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 personOrders.add(new PersonOrder());
-                adapter.notifyItemInserted(adapter.getItemCount());//Make the view appear dynamically in recyclerview by notifying adapter of insertion.
+                //update adapter personOrder with new person order
+                adapter.notifyItemInserted(personOrders.size()-1);//Make the view appear dynamically in recyclerview by notifying adapter of insertion.
             }
         });
 
@@ -146,9 +147,11 @@ public class PersonInputBillActivity extends AppCompatActivity {
             int position = intent.getIntExtra("position", 0);
 
             mPersonOrderList = intent.getParcelableArrayListExtra(PERSON_ORDER_LIST);
-            for( int i=0; i<mPersonOrderList.size(); i++) {
-                Log.d("person order list", "Activity:"+ mPersonOrderList.get(i).getmOrderName()+i);
-            }
+
+//            for( int i=0; i<mPersonOrderList.size(); i++) {
+//                Log.d("person order list", "Activity:"+ mPersonOrderList.get(i).getmOrderName()+i);
+//            }
+
 //            mPersonOrderList = intent.getParcelableArrayListExtra( "mPersonOrderList");
 //
 //            //enteredNumberCost[position]=0.0;
@@ -164,7 +167,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageOrderNameReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-        Log.d("order-name-recievd", "received!");
+        Log.d("order-name-received", "received!");
 
 
         }

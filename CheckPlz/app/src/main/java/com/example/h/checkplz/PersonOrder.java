@@ -12,7 +12,7 @@ public class PersonOrder implements Parcelable {
     private int mOrderAmount;
 
     public PersonOrder(){
-        mOrderName="Person order";
+        mOrderName="";
         mOrderCost=0;
         mOrderAmount=0;
     }

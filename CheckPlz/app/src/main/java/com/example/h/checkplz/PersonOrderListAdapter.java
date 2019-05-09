@@ -23,13 +23,16 @@ import java.util.List;
 public class PersonOrderListAdapter extends
         RecyclerView.Adapter<PersonOrderListAdapter.ViewHolder>{
 
+    // Store a member variable for the contacts
+    private ArrayList<PersonOrder> mPersonOrderList;
     private OnEditTextChanged onEditTextChanged;
     public static int viewID; //Use to keep tab of EditText being changed so PersonInpuTBillActivity can set the correct value to it's respective array.
     final String PERSON_ORDER_LIST = "person-order-list";
-    final String DELETE_ORDER = "delete-order";
-    final String UPDATE_ORDER_NAME = "update-order-name";
-    final String UPDATE_ORDER_COST = "update-order-cost";
-    final String UPDATE_ORDER_AMOUNT = "update-order-amount";
+    final String ORDER = "order";
+//    final String DELETE_ORDER = "delete-order";
+//    final String UPDATE_ORDER_NAME = "update-order-name";
+//    final String UPDATE_ORDER_COST = "update-order-cost";
+//    final String UPDATE_ORDER_AMOUNT = "update-order-amount";
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -38,7 +41,6 @@ public class PersonOrderListAdapter extends
         // for any view that will be set as you render a row
         public EditText personOrderNameEditText;
         public EditText personOrderCostEditText;
-        public TextView personOrderMultipleSymbolTextView;
         public EditText personOrderMultipleAmountEditText;
         public ImageView personOrderDelete;
 
@@ -50,14 +52,44 @@ public class PersonOrderListAdapter extends
             super(itemView);
             personOrderNameEditText = (EditText) itemView.findViewById(R.id.person_order_name);
             personOrderCostEditText = (EditText) itemView.findViewById(R.id.person_order_cost);
-            personOrderMultipleSymbolTextView = (TextView) itemView.findViewById(R.id.person_order_multiple_symbol);
             personOrderMultipleAmountEditText = (EditText) itemView.findViewById(R.id.person_order_multiple_amount);
             personOrderDelete = (ImageView) itemView.findViewById(R.id.person_order_delete);
+
+            //Delete order
+            personOrderDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int currentPosition = getAdapterPosition();//gets updated position
+
+                    try{
+                        //delete item and update person order list
+                        removeItem(currentPosition);
+                    }catch(ArrayIndexOutOfBoundsException e){
+                        e.printStackTrace();
+                    }
+
+                }
+
+            });
+            personOrderNameEditText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    PersonOrder currentPersonOrder = new PersonOrder();
+                    currentPersonOrder.setmOrderName(s.toString());
+                    mPersonOrderList.set(getAdapterPosition(), currentPersonOrder);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
         }
     }
 
-    // Store a member variable for the contacts
-    private ArrayList<PersonOrder> mPersonOrderList;
 
     // Pass in the contact array into the constructor
     public PersonOrderListAdapter(ArrayList<PersonOrder> personOrderList, OnEditTextChanged onEditTextChanged){
@@ -81,21 +113,32 @@ public class PersonOrderListAdapter extends
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(final PersonOrderListAdapter.ViewHolder viewHolder, final int position) {
-        // Get the data model based on position
-        final PersonOrder personOrder = mPersonOrderList.get(position);
+    public void onBindViewHolder(PersonOrderListAdapter.ViewHolder viewHolder, final int position) {
+        int x = viewHolder.getLayoutPosition();
 
-        ImageView imageViewDeleteOrder = viewHolder.personOrderDelete;
+        Log.d("onBind", mPersonOrderList.get(x).getmOrderName());
+
+        if(mPersonOrderList.get(x).getmOrderName().length() > 0) {
+            viewHolder.personOrderNameEditText.setText(mPersonOrderList.get(x).getmOrderName());
+        }
+        else{
+            viewHolder.personOrderNameEditText.setText(null);
+            //viewHolder.personOrderNameEditText.setHint(hint);
+            viewHolder.personOrderNameEditText.requestFocus();
+        }
+        /*ImageView imageViewDeleteOrder = viewHolder.personOrderDelete;
 
         // Set item views based on your views and data model
-        EditText editTextOrderName = viewHolder.personOrderNameEditText;
+        final EditText editTextOrderName = viewHolder.personOrderNameEditText;
         final EditText editTextOrderCost = viewHolder.personOrderCostEditText;
         final EditText editTextOrderMultipleAmount = viewHolder.personOrderMultipleAmountEditText;
 
-        final Intent intentDelete = new Intent(DELETE_ORDER);
-        final Intent intentName = new Intent(UPDATE_ORDER_NAME);
-        final Intent intentOrderCost = new Intent(UPDATE_ORDER_COST);
-        final Intent intentOrderAmount = new Intent(UPDATE_ORDER_AMOUNT);
+        final Intent intent = new Intent(ORDER);
+
+//        final Intent intentDelete = new Intent(DELETE_ORDER);
+//        final Intent intentName = new Intent(UPDATE_ORDER_NAME);
+//        final Intent intentOrderCost = new Intent(UPDATE_ORDER_COST);
+//        final Intent intentOrderAmount = new Intent(UPDATE_ORDER_AMOUNT);
 
         //TODO: Change listener for PersonOrderList name
 
@@ -109,7 +152,7 @@ public class PersonOrderListAdapter extends
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //onEditTextChanged.onTextChanged(position, charSequence.toString());
-//                Toast.makeText(viewHolder.personOrderNameEditText.getContext(), "Ordername editing onTextChanged", Toast.LENGTH_SHORT ).show();
+                //Toast.makeText(viewHolder.personOrderNameEditText.getContext(), "Ordername editing onTextChanged", Toast.LENGTH_SHORT ).show();
 
             }
 
@@ -120,9 +163,13 @@ public class PersonOrderListAdapter extends
 //                mPersonOrderList.set(position, personOrder);
 //                //TODO:send intent to person Input Bill Activity
 //                //TODO:create method for intent being used so all listeners can call it
-//                intentName.putParcelableArrayListExtra(PERSON_ORDER_LIST, mPersonOrderList);
+//                PersonOrder personOrder = new PersonOrder();
+//                personOrder.setmOrderName(editable.toString());
+//                mPersonOrderList.set(viewHolder.getAdapterPosition(), personOrder);
+//                intent.putParcelableArrayListExtra(PERSON_ORDER_LIST, mPersonOrderList);
 //                LocalBroadcastManager.getInstance(viewHolder.personOrderNameEditText.getContext()).sendBroadcast(intentName);
 //                Toast.makeText(viewHolder.personOrderNameEditText.getContext(), "Ordername edititing", Toast.LENGTH_SHORT ).show();
+
 
             }
         });
@@ -172,29 +219,35 @@ public class PersonOrderListAdapter extends
             @Override
             public void onClick(View view) {
                 int currentPosition = viewHolder.getAdapterPosition();//gets updated position
-                //update text view of order cost and amount
+                //update text view of order name, cost and amount for deleted view to be blank
+                editTextOrderName.setText("");
                 editTextOrderCost.setText("");
                 editTextOrderMultipleAmount.setText("");
 
                 //delete item and update person order list
-                mPersonOrderList.remove(currentPosition);
-                notifyItemRemoved(currentPosition);
+                removeItem(currentPosition);
 
-                for( int i=0; i<mPersonOrderList.size(); i++) {
-                    Log.d("person order list", "Adapter:" + mPersonOrderList.get(i).getmOrderName()+i);
-                }
                 //broadcast updated mPersonOrderlist
-                intentDelete.putExtra("position", currentPosition);
+                intent.putExtra("position", currentPosition);
                 //new broadcast
-                intentDelete.putParcelableArrayListExtra(PERSON_ORDER_LIST, mPersonOrderList);
+                intent.putParcelableArrayListExtra(PERSON_ORDER_LIST, mPersonOrderList);
 
-                LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intentDelete);
+                LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
                 Log.d("delete-order-sent", "position " + currentPosition +" sent");
 
 
             }
-        });
 
+        });
+        */
+
+    }
+
+    private void removeItem(int currentPosition) {
+
+        mPersonOrderList.remove(currentPosition);
+        notifyItemRemoved(currentPosition);
+        notifyItemRangeChanged(currentPosition, getItemCount());
     }
 
     // Returns the total count of items in the list
@@ -206,5 +259,15 @@ public class PersonOrderListAdapter extends
     // Return PersonOrder list
     public ArrayList<PersonOrder> getList() {
         return this.mPersonOrderList;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 }
