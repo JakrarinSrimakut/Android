@@ -67,9 +67,7 @@ public class PersonOrderListAdapter extends
                     }catch(ArrayIndexOutOfBoundsException e){
                         e.printStackTrace();
                     }
-
                 }
-
             });
             personOrderNameEditText.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -78,13 +76,56 @@ public class PersonOrderListAdapter extends
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    PersonOrder currentPersonOrder = new PersonOrder();
+                    PersonOrder currentPersonOrder = mPersonOrderList.get(getAdapterPosition());//pull existed person order to ensure any value of other edittext remain as is
                     currentPersonOrder.setmOrderName(s.toString());
+                    mPersonOrderList.set(getAdapterPosition(), currentPersonOrder);
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+            personOrderCostEditText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    PersonOrder currentPersonOrder = mPersonOrderList.get(getAdapterPosition());
+                    if(s.toString().isEmpty()){//prevent crash due to "" can't be converted to double
+                        currentPersonOrder.setmOrderAmount(0);
+                    }else{
+                        currentPersonOrder.setmOrderCost(Double.parseDouble(s.toString()));
+                    }
                     mPersonOrderList.set(getAdapterPosition(), currentPersonOrder);
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                }
+            });
+            personOrderMultipleAmountEditText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Log.d("characterS", s.toString());
+                    PersonOrder currentPersonOrder = mPersonOrderList.get(getAdapterPosition());
+                    if(s.toString().isEmpty()){
+                        currentPersonOrder.setmOrderAmount(0);
+                    }else{
+                        currentPersonOrder.setmOrderAmount(Integer.parseInt(s.toString()));
+                    }
+                    mPersonOrderList.set(getAdapterPosition(), currentPersonOrder);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    Log.d("OrderAmount", String.valueOf(mPersonOrderList.get(getAdapterPosition()).getmOrderAmount()));
                 }
             });
         }
@@ -121,6 +162,8 @@ public class PersonOrderListAdapter extends
         if(mPersonOrderList.get(x).getmOrderName().length() > 0) {
             viewHolder.personOrderNameEditText.setText(mPersonOrderList.get(x).getmOrderName());
         }
+        //TODO:If condition for getOrderCost
+        //TODO:If condtion for getorderAmount
         else{
             viewHolder.personOrderNameEditText.setText(null);
             //viewHolder.personOrderNameEditText.setHint(hint);
