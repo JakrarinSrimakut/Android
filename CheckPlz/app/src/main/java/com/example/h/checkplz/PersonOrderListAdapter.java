@@ -163,11 +163,23 @@ public class PersonOrderListAdapter extends
             viewHolder.personOrderNameEditText.setText(mPersonOrderList.get(x).getmOrderName());
         }
         //TODO:If condition for getOrderCost
+        if(mPersonOrderList.get(x).getmOrderCost() > 0) {
+            viewHolder.personOrderCostEditText.setText(String.valueOf(mPersonOrderList.get(x).getmOrderCost()));
+        }
         //TODO:If condtion for getorderAmount
+        if(mPersonOrderList.get(x).getmOrderAmount() > 0) {
+            viewHolder.personOrderMultipleAmountEditText.setText(String.valueOf(mPersonOrderList.get(x).getmOrderAmount()));
+        }
         else{
             viewHolder.personOrderNameEditText.setText(null);
             //viewHolder.personOrderNameEditText.setHint(hint);
             viewHolder.personOrderNameEditText.requestFocus();
+            viewHolder.personOrderCostEditText.setText(null);
+            //viewHolder.personOrderNameEditText.setHint(hint);
+            viewHolder.personOrderCostEditText.requestFocus();
+            viewHolder.personOrderMultipleAmountEditText.setText(null);
+            //viewHolder.personOrderNameEditText.setHint(hint);
+            viewHolder.personOrderMultipleAmountEditText.requestFocus();
         }
         /*ImageView imageViewDeleteOrder = viewHolder.personOrderDelete;
 
