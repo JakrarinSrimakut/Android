@@ -84,6 +84,7 @@ public class PersonOrderListAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                    Log.d("OrderName", String.valueOf(mPersonOrderList.get(getAdapterPosition()).getmOrderName()));
                 }
             });
             personOrderCostEditText.addTextChangedListener(new TextWatcher() {
@@ -95,7 +96,7 @@ public class PersonOrderListAdapter extends
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     PersonOrder currentPersonOrder = mPersonOrderList.get(getAdapterPosition());
                     if(s.toString().isEmpty()){//prevent crash due to "" can't be converted to double
-                        currentPersonOrder.setmOrderAmount(0);
+                        currentPersonOrder.setmOrderCost(0);
                     }else{
                         currentPersonOrder.setmOrderCost(Double.parseDouble(s.toString()));
                     }
@@ -104,6 +105,7 @@ public class PersonOrderListAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                    Log.d("OrderCost", String.valueOf(mPersonOrderList.get(getAdapterPosition()).getmOrderCost()));
                 }
             });
             personOrderMultipleAmountEditText.addTextChangedListener(new TextWatcher() {
@@ -157,26 +159,28 @@ public class PersonOrderListAdapter extends
     public void onBindViewHolder(PersonOrderListAdapter.ViewHolder viewHolder, final int position) {
         int x = viewHolder.getLayoutPosition();
 
-        Log.d("onBind", mPersonOrderList.get(x).getmOrderName());
-
         if(mPersonOrderList.get(x).getmOrderName().length() > 0) {
             viewHolder.personOrderNameEditText.setText(mPersonOrderList.get(x).getmOrderName());
+        }
+        else{
+            viewHolder.personOrderNameEditText.setText(null);
+            //viewHolder.personOrderNameEditText.setHint(hint);
+            viewHolder.personOrderNameEditText.requestFocus();
         }
         //TODO:If condition for getOrderCost
         if(mPersonOrderList.get(x).getmOrderCost() > 0) {
             viewHolder.personOrderCostEditText.setText(String.valueOf(mPersonOrderList.get(x).getmOrderCost()));
+        }
+        else{
+            viewHolder.personOrderCostEditText.setText(null);
+            //viewHolder.personOrderNameEditText.setHint(hint);
+            viewHolder.personOrderCostEditText.requestFocus();
         }
         //TODO:If condtion for getorderAmount
         if(mPersonOrderList.get(x).getmOrderAmount() > 0) {
             viewHolder.personOrderMultipleAmountEditText.setText(String.valueOf(mPersonOrderList.get(x).getmOrderAmount()));
         }
         else{
-            viewHolder.personOrderNameEditText.setText(null);
-            //viewHolder.personOrderNameEditText.setHint(hint);
-            viewHolder.personOrderNameEditText.requestFocus();
-            viewHolder.personOrderCostEditText.setText(null);
-            //viewHolder.personOrderNameEditText.setHint(hint);
-            viewHolder.personOrderCostEditText.requestFocus();
             viewHolder.personOrderMultipleAmountEditText.setText(null);
             //viewHolder.personOrderNameEditText.setHint(hint);
             viewHolder.personOrderMultipleAmountEditText.requestFocus();
