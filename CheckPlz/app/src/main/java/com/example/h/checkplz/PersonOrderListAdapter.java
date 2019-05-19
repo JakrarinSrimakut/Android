@@ -33,6 +33,8 @@ public class PersonOrderListAdapter extends
 //    final String UPDATE_ORDER_NAME = "update-order-name";
 //    final String UPDATE_ORDER_COST = "update-order-cost";
 //    final String UPDATE_ORDER_AMOUNT = "update-order-amount";
+    final String FROM_PERSON_ORDER_LIST_ADAPTER = "from-person-order-list-adapter";
+    final String UPDATE_PERSON_ORDER_LIST = "update-person-order-list";
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -46,7 +48,7 @@ public class PersonOrderListAdapter extends
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
-        public ViewHolder(View itemView){
+        public ViewHolder(final View itemView){
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
@@ -67,6 +69,7 @@ public class PersonOrderListAdapter extends
                     }catch(ArrayIndexOutOfBoundsException e){
                         e.printStackTrace();
                     }
+                    sendListToAcitivity(itemView);
                 }
             });
             personOrderNameEditText.addTextChangedListener(new TextWatcher() {
@@ -85,6 +88,7 @@ public class PersonOrderListAdapter extends
                 @Override
                 public void afterTextChanged(Editable s) {
                     Log.d("OrderName", String.valueOf(mPersonOrderList.get(getAdapterPosition()).getmOrderName()));
+                    sendListToAcitivity(itemView);
                 }
             });
             personOrderCostEditText.addTextChangedListener(new TextWatcher() {
@@ -106,6 +110,7 @@ public class PersonOrderListAdapter extends
                 @Override
                 public void afterTextChanged(Editable s) {
                     Log.d("OrderCost", String.valueOf(mPersonOrderList.get(getAdapterPosition()).getmOrderCost()));
+                    sendListToAcitivity(itemView);
                 }
             });
             personOrderMultipleAmountEditText.addTextChangedListener(new TextWatcher() {
@@ -115,7 +120,6 @@ public class PersonOrderListAdapter extends
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    Log.d("characterS", s.toString());
                     PersonOrder currentPersonOrder = mPersonOrderList.get(getAdapterPosition());
                     if(s.toString().isEmpty()){
                         currentPersonOrder.setmOrderAmount(0);
@@ -128,6 +132,7 @@ public class PersonOrderListAdapter extends
                 @Override
                 public void afterTextChanged(Editable s) {
                     Log.d("OrderAmount", String.valueOf(mPersonOrderList.get(getAdapterPosition()).getmOrderAmount()));
+                    sendListToAcitivity(itemView);
                 }
             });
         }
@@ -135,9 +140,8 @@ public class PersonOrderListAdapter extends
 
 
     // Pass in the contact array into the constructor
-    public PersonOrderListAdapter(ArrayList<PersonOrder> personOrderList, OnEditTextChanged onEditTextChanged){
+    public PersonOrderListAdapter(ArrayList<PersonOrder> personOrderList){
         mPersonOrderList=personOrderList;
-        this.onEditTextChanged = onEditTextChanged;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -159,6 +163,7 @@ public class PersonOrderListAdapter extends
     public void onBindViewHolder(PersonOrderListAdapter.ViewHolder viewHolder, final int position) {
         int x = viewHolder.getLayoutPosition();
 
+        //Display the correct values for edit text when rows are deleted
         if(mPersonOrderList.get(x).getmOrderName().length() > 0) {
             viewHolder.personOrderNameEditText.setText(mPersonOrderList.get(x).getmOrderName());
         }
@@ -167,7 +172,6 @@ public class PersonOrderListAdapter extends
             //viewHolder.personOrderNameEditText.setHint(hint);
             viewHolder.personOrderNameEditText.requestFocus();
         }
-        //TODO:If condition for getOrderCost
         if(mPersonOrderList.get(x).getmOrderCost() > 0) {
             viewHolder.personOrderCostEditText.setText(String.valueOf(mPersonOrderList.get(x).getmOrderCost()));
         }
@@ -176,7 +180,6 @@ public class PersonOrderListAdapter extends
             //viewHolder.personOrderNameEditText.setHint(hint);
             viewHolder.personOrderCostEditText.requestFocus();
         }
-        //TODO:If condtion for getorderAmount
         if(mPersonOrderList.get(x).getmOrderAmount() > 0) {
             viewHolder.personOrderMultipleAmountEditText.setText(String.valueOf(mPersonOrderList.get(x).getmOrderAmount()));
         }
@@ -185,125 +188,19 @@ public class PersonOrderListAdapter extends
             //viewHolder.personOrderNameEditText.setHint(hint);
             viewHolder.personOrderMultipleAmountEditText.requestFocus();
         }
-        /*ImageView imageViewDeleteOrder = viewHolder.personOrderDelete;
-
-        // Set item views based on your views and data model
-        final EditText editTextOrderName = viewHolder.personOrderNameEditText;
-        final EditText editTextOrderCost = viewHolder.personOrderCostEditText;
-        final EditText editTextOrderMultipleAmount = viewHolder.personOrderMultipleAmountEditText;
-
-        final Intent intent = new Intent(ORDER);
-
-//        final Intent intentDelete = new Intent(DELETE_ORDER);
-//        final Intent intentName = new Intent(UPDATE_ORDER_NAME);
-//        final Intent intentOrderCost = new Intent(UPDATE_ORDER_COST);
-//        final Intent intentOrderAmount = new Intent(UPDATE_ORDER_AMOUNT);
-
-        //TODO: Change listener for PersonOrderList name
-
-        //Set text changelistenor for personOrderCostEditText
-        viewHolder.personOrderNameEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //viewID = editTextOrderCost.getId();
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //onEditTextChanged.onTextChanged(position, charSequence.toString());
-                //Toast.makeText(viewHolder.personOrderNameEditText.getContext(), "Ordername editing onTextChanged", Toast.LENGTH_SHORT ).show();
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                //set text to person order and update persorOrderlist
-//                personOrder.setmOrderName(onEditTextChanged.toString());
-//                mPersonOrderList.set(position, personOrder);
-//                //TODO:send intent to person Input Bill Activity
-//                //TODO:create method for intent being used so all listeners can call it
-//                PersonOrder personOrder = new PersonOrder();
-//                personOrder.setmOrderName(editable.toString());
-//                mPersonOrderList.set(viewHolder.getAdapterPosition(), personOrder);
-//                intent.putParcelableArrayListExtra(PERSON_ORDER_LIST, mPersonOrderList);
-//                LocalBroadcastManager.getInstance(viewHolder.personOrderNameEditText.getContext()).sendBroadcast(intentName);
-//                Toast.makeText(viewHolder.personOrderNameEditText.getContext(), "Ordername edititing", Toast.LENGTH_SHORT ).show();
-
-
-            }
-        });
-
-        //Set text changelistenor for personOrderCostEditText
-        viewHolder.personOrderCostEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                viewID = editTextOrderCost.getId();
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                onEditTextChanged.onTextChanged(position, charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                //set text to person order and update persorOrderlist
-//                personOrder.setmOrderCost(Integer.parseInt(onEditTextChanged.toString()));
-//                mPersonOrderList.set(position, personOrder);
-            }
-        });
-
-        //Set text changelistenor for personOrderMultipleAmountEditText
-        viewHolder.personOrderMultipleAmountEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                viewID = editTextOrderMultipleAmount.getId();
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                onEditTextChanged.onTextChanged(position, charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                //TODO: update personOrderList position amount
-
-            }
-        });
-
-
-        //Delete order
-        imageViewDeleteOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int currentPosition = viewHolder.getAdapterPosition();//gets updated position
-                //update text view of order name, cost and amount for deleted view to be blank
-                editTextOrderName.setText("");
-                editTextOrderCost.setText("");
-                editTextOrderMultipleAmount.setText("");
-
-                //delete item and update person order list
-                removeItem(currentPosition);
-
-                //broadcast updated mPersonOrderlist
-                intent.putExtra("position", currentPosition);
-                //new broadcast
-                intent.putParcelableArrayListExtra(PERSON_ORDER_LIST, mPersonOrderList);
-
-                LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
-                Log.d("delete-order-sent", "position " + currentPosition +" sent");
-
-
-            }
-
-        });
-        */
 
     }
 
-    private void removeItem(int currentPosition) {
+    //Send personOrderList to PersonInputBillActivity
+    private void sendListToAcitivity(View itemView){
+        Intent intent = new Intent(FROM_PERSON_ORDER_LIST_ADAPTER);
+        intent.putExtra(UPDATE_PERSON_ORDER_LIST, mPersonOrderList);
+        LocalBroadcastManager.getInstance(itemView.getContext()).sendBroadcast(intent);
+    }
 
+
+    //remove row from list and display it accordingly
+    private void removeItem(int currentPosition) {
         mPersonOrderList.remove(currentPosition);
         notifyItemRemoved(currentPosition);
         notifyItemRangeChanged(currentPosition, getItemCount());

@@ -25,11 +25,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class PersonInputBillActivity extends AppCompatActivity {
-    final String PERSON_ORDER_LIST = "person-order-list";
-    final String DELETE_ORDER = "delete-order";
-    final String UPDATE_ORDER_NAME = "update-order-name";
-    final String UPDATE_ORDER_COST = "update-order-cost";
-    final String UPDATE_ORDER_AMOUNT = "update-order-amount";
+    final String FROM_PERSON_ORDER_LIST_ADAPTER = "from-person-order-list-adapter";
+    final String UPDATE_PERSON_ORDER_LIST = "update-person-order-list";
     private ArrayList<PersonOrder> personOrders = new ArrayList<>();
     private PersonBill mPersonBill;
     private EditText editName;
@@ -39,11 +36,6 @@ public class PersonInputBillActivity extends AppCompatActivity {
     int maxEnterNumber = 1000;//Max amount of orders (rows for RV)
     Double[] enteredNumberCost = new Double[maxEnterNumber];
     Integer[] enteredNumberMultipleAmount = new Integer[maxEnterNumber];
-    IntentFilter filterDeleteOrder = new IntentFilter(DELETE_ORDER);
-    //TODO:INTENT FILTER FOR UPDATE ORDER NAME,COST,AMOUNT
-    IntentFilter filterOrderName = new IntentFilter(UPDATE_ORDER_NAME);
-    IntentFilter filterOrderCost = new IntentFilter(UPDATE_ORDER_COST);
-    IntentFilter filterOrderAmount = new IntentFilter(UPDATE_ORDER_AMOUNT);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,33 +59,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
         personOrders.add(pOrder);
         personOrders.add(new PersonOrder());
         //Create adapter passing the sample user data
-        adapter = new PersonOrderListAdapter(personOrders, new OnEditTextChanged(){//onEdiTextChanged is in sync with the on in adapter?
-
-            @Override
-            public void onTextChanged(int position, String charSeq) {
-                Log.d("TAG", "Postion" + position + " " + charSeq);
-//                switch (PersonOrderListAdapter.viewID){//viewID is used to find the edittext of the position
-//                    case R.id.person_order_cost:
-//                        Log.d("person_order_cost", "adapter:" +PersonOrderListAdapter.viewID+" cost ID:" + R.id.person_order_cost);
-//                        if(charSeq.equals("")){
-//                            enteredNumberCost[position]=0.0;
-//                            break;
-//                        }
-//                        enteredNumberCost[position] = Double.valueOf(charSeq); //Keep track of the the value change for total
-//                        break;
-//                    case R.id.person_order_multiple_amount:
-//                        Log.d("person_amount", "adapter:" +PersonOrderListAdapter.viewID+" amount ID:" + R.id.person_order_multiple_amount);
-//                        if(charSeq.equals("")){
-//                            enteredNumberMultipleAmount[position]=1;
-//                            break;
-//                        }
-//                        enteredNumberMultipleAmount[position] = Integer.valueOf(charSeq);
-//                        break;
-//                    default:
-//                }
-                updateTotalValue();
-            }
-        });
+        adapter = new PersonOrderListAdapter(personOrders);
         //Attach the adapter to the recyclerview to populate items
         rvPersonOrdersList.setAdapter(adapter);
         //Set Layout manager to position the items
@@ -113,14 +79,9 @@ public class PersonInputBillActivity extends AppCompatActivity {
 
         //TODO: REGSISTER MULTIPLE BROADCAST RECEIVERS? OR 1 AND INTENTFILTER TO IT?
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageDeleteReceiver,
-                new IntentFilter(DELETE_ORDER));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageOrderNameReceiver,
-                new IntentFilter(UPDATE_ORDER_NAME));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageOrderCostReceiver,
-                new IntentFilter(UPDATE_ORDER_COST));
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageOrderAmountReceiver,
-                new IntentFilter(UPDATE_ORDER_AMOUNT));
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageListReceiver,
+                new IntentFilter(FROM_PERSON_ORDER_LIST_ADAPTER));
         /*Init PersonBill to hold person name and person's orders in arraylist
         * only when menu check list is click. But how about editing? When you edit and click check
         * mark it will generate a new instance. Answer: make a private PersonBill member
@@ -140,16 +101,14 @@ public class PersonInputBillActivity extends AppCompatActivity {
          */
     }
     //TODO: RECEIVER FOR EACH UPDATE FOR ORDER NAME,COST,AMOUNT?
-
-    private BroadcastReceiver mMessageDeleteReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mMessageListReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int position = intent.getIntExtra("position", 0);
 
-            mPersonOrderList = intent.getParcelableArrayListExtra(PERSON_ORDER_LIST);
+            mPersonOrderList = intent.getParcelableArrayListExtra(UPDATE_PERSON_ORDER_LIST);
 
 //            for( int i=0; i<mPersonOrderList.size(); i++) {
-//                Log.d("person order list", "Activity:"+ mPersonOrderList.get(i).getmOrderName()+i);
+//                Log.d("personOrderList", "Row:" + i + " OrderName: " + mPersonOrderList.get(i).getmOrderName());
 //            }
 
 //            mPersonOrderList = intent.getParcelableArrayListExtra( "mPersonOrderList");
@@ -158,35 +117,6 @@ public class PersonInputBillActivity extends AppCompatActivity {
 //            //enteredNumberMultipleAmount[position]=1;
 //            updateTotalValue();
 //
-
-           Log.d("delete-order-received", "position: " + position + " received");
-
-        }
-    };
-
-    private BroadcastReceiver mMessageOrderNameReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-        Log.d("order-name-received", "received!");
-
-
-        }
-    };
-
-    private BroadcastReceiver mMessageOrderCostReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-
-
-        }
-    };
-
-    private BroadcastReceiver mMessageOrderAmountReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-
 
         }
     };
