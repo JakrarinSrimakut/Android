@@ -24,6 +24,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import Utilities.Calculation;
+
 public class PersonInputBillActivity extends AppCompatActivity {
     final String FROM_PERSON_ORDER_LIST_ADAPTER = "from-person-order-list-adapter";
     final String UPDATE_PERSON_ORDER_LIST = "update-person-order-list";
@@ -77,8 +79,6 @@ public class PersonInputBillActivity extends AppCompatActivity {
             }
         });
 
-        //TODO: REGSISTER MULTIPLE BROADCAST RECEIVERS? OR 1 AND INTENTFILTER TO IT?
-
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageListReceiver,
                 new IntentFilter(FROM_PERSON_ORDER_LIST_ADAPTER));
@@ -100,7 +100,6 @@ public class PersonInputBillActivity extends AppCompatActivity {
          *
          */
     }
-    //TODO: RECEIVER FOR EACH UPDATE FOR ORDER NAME,COST,AMOUNT?
     private BroadcastReceiver mMessageListReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -111,10 +110,6 @@ public class PersonInputBillActivity extends AppCompatActivity {
 //                Log.d("personOrderList", "Row:" + i + " OrderName: " + mPersonOrderList.get(i).getmOrderName());
 //            }
 
-//            mPersonOrderList = intent.getParcelableArrayListExtra( "mPersonOrderList");
-//
-//            //enteredNumberCost[position]=0.0;
-//            //enteredNumberMultipleAmount[position]=1;
 //            updateTotalValue();
 //
 
@@ -128,20 +123,10 @@ public class PersonInputBillActivity extends AppCompatActivity {
         }
     }
 
-    private void updateTotalValue() {
-        double sum = 0;
-
-        /*
-        for(int i = 0; i<maxEnterNumber; i++){
-            sum += enteredNumberCost[i] * enteredNumberMultipleAmount[i] ;
-        }
-        */
-
-        Iterator<PersonOrder> iter=mPersonOrderList.iterator();
-        while(iter.hasNext()){
-            sum += iter.next().getmOrderCost() * iter.next().getmOrderAmount();
-        }
-        totalAmount.setText(String.valueOf(sum));
+    private void updateTotal() {
+        //
+        //int total = Calculation.calculateTotal(mPersonOrderList);
+        //totalAmount.setText(String.valueOf(total));
     }
 
 

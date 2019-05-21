@@ -1,16 +1,23 @@
 package Utilities;
 
+import com.example.h.checkplz.PersonOrder;
+
+import java.util.ArrayList;
+
 public class Calculation {
 
-    //returns total value
-    public static int calculateTotalValue(int maxEnterNumber, Double[] enteredNumberCost, Integer[] enteredNumberAmount ) {
-        int sum = 0;
+    //returns total
+    public static int calculateTotal(ArrayList<PersonOrder> mPersonOrderList) {
+        int total = 0;
 
-        for(int i = 0; i<maxEnterNumber; i++){
-            sum += enteredNumberCost[i] * enteredNumberAmount[i];
-        }
-        return sum;
+
+
+        return total;
     }
+
+    //return sub total
+
+    //return tax
 
     //return tip 10%
 

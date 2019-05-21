@@ -25,7 +25,6 @@ public class PersonOrderListAdapter extends
 
     // Store a member variable for the contacts
     private ArrayList<PersonOrder> mPersonOrderList;
-    private OnEditTextChanged onEditTextChanged;
     public static int viewID; //Use to keep tab of EditText being changed so PersonInpuTBillActivity can set the correct value to it's respective array.
     final String PERSON_ORDER_LIST = "person-order-list";
     final String ORDER = "order";
