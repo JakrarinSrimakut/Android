@@ -23,7 +23,7 @@ public class Calculation {
     public static double calculateSubTotal(ArrayList<PersonOrder> mPersonOrderList){
         double subTotal = 0;
         for(int i = 0; i<mPersonOrderList.size(); i++){
-            subTotal += mPersonOrderList.get(i).getmOrderCost();
+            subTotal += mPersonOrderList.get(i).getmOrderCost()*mPersonOrderList.get(i).getmOrderAmount();
         }
         return subTotal;
     }
