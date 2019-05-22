@@ -110,8 +110,8 @@ public class PersonInputBillActivity extends AppCompatActivity {
 //                Log.d("personOrderList", "Row:" + i + " OrderName: " + mPersonOrderList.get(i).getmOrderName());
 //            }
 
-//            updateTotalValue();
-//
+            updateTotal();
+//            updateTaxes();
 
         }
     };
@@ -123,10 +123,11 @@ public class PersonInputBillActivity extends AppCompatActivity {
         }
     }
 
+    //Display the correct total value of bill
     private void updateTotal() {
         //
-        //int total = Calculation.calculateTotal(mPersonOrderList);
-        //totalAmount.setText(String.valueOf(total));
+        double total = Calculation.calculateTotal(mPersonOrderList);
+        totalAmount.setText(String.format("%.2f", total));
     }
 
 
