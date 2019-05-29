@@ -29,16 +29,21 @@ import Utilities.Calculation;
 public class PersonInputBillActivity extends AppCompatActivity {
     final String FROM_PERSON_ORDER_LIST_ADAPTER = "from-person-order-list-adapter";
     final String UPDATE_PERSON_ORDER_LIST = "update-person-order-list";
+    final String PERSON_ORDER_BILL = "person-order-bill";
     private ArrayList<PersonOrder> personOrders = new ArrayList<>();
     private PersonBill mPersonBill;
-    private EditText editName;
     private ArrayList<PersonOrder> mPersonOrderList;
-    public TextView totalAmount;
-    PersonOrderListAdapter adapter;
-    int maxEnterNumber = 1000;//Max amount of orders (rows for RV)
-    Double[] enteredNumberCost = new Double[maxEnterNumber];
-    Integer[] enteredNumberMultipleAmount = new Integer[maxEnterNumber];
 
+    private EditText editTextName;
+    private TextView textViewTotalAmount;
+    private TextView textView10PercentTip;
+    private TextView textView15PercentTip;
+    private TextView textView20PercentTip;
+
+    PersonOrderListAdapter adapter;
+
+
+    //TODO: Incorporate PersonBill to store total, tip, tax
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,14 +52,20 @@ public class PersonInputBillActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("PersonInputBillActivity");
 
-        editName=(EditText) findViewById(R.id.person_name_input_bill_activity);
-        totalAmount=(TextView) findViewById(R.id.person_total_amount);
+        mPersonBill = new PersonBill();
+
+        editTextName=(EditText) findViewById(R.id.person_name_input_bill_activity);
+        textViewTotalAmount=(TextView) findViewById(R.id.person_total_amount);
+        textView10PercentTip = (TextView) findViewById(R.id.tip_text_view_10_percent);
+        textView15PercentTip = (TextView) findViewById(R.id.tip_text_view_15_percent);
+        textView20PercentTip = (TextView) findViewById(R.id.tip_text_view_20_percent);
+
+
 
         //Create recyclerView and adapter to be reference
         // Lookup the recyclerview in activity layout
         RecyclerView rvPersonOrdersList = (RecyclerView) findViewById(R.id.rv_person_order_list);
         
-        //setItems();
 
         //Initialize Orders
         PersonOrder pOrder = new PersonOrder();
@@ -100,6 +111,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
          *
          */
     }
+
     private BroadcastReceiver mMessageListReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -111,23 +123,28 @@ public class PersonInputBillActivity extends AppCompatActivity {
 //            }
 
             updateTotal();
-//            updateTaxes();
+            updateTips();
 
         }
     };
 
-    private void setItems() {
-        for(int i=0; i<maxEnterNumber; i++){
-            enteredNumberCost[i]=0.00;
-            enteredNumberMultipleAmount[i]=1;
-        }
+    private void updateTips() {
+        double tenPercentTip = Calculation.calculate10PercentTip(mPersonBill.getmTotalBill());
+        double fifteenPercentTip = Calculation.calculate15PercentTip(mPersonBill.getmTotalBill());
+        double twentyPercentTip = Calculation.calculate20PercentTip(mPersonBill.getmTotalBill());
+        textView10PercentTip.setText(String.format("%.2f", tenPercentTip));
+        textView15PercentTip.setText(String.format("%.2f", fifteenPercentTip));
+        textView20PercentTip.setText(String.format("%.2f", twentyPercentTip));
+
     }
+
 
     //Display the correct total value of bill
     private void updateTotal() {
         //
         double total = Calculation.calculateTotal(mPersonOrderList);
-        totalAmount.setText(String.format("%.2f", total));
+        mPersonBill.setmTotalBill(total);
+        textViewTotalAmount.setText(String.format("%.2f", total));
     }
 
 
@@ -149,13 +166,12 @@ public class PersonInputBillActivity extends AppCompatActivity {
             /*Send completed personBill to PeopleBillListActivity*/
             case R.id.action_done:
                 /*Init PersonBill by setting person's name and fill array of person's order*/
-                //mPersonBill = new PersonBill();
-                //mPersonBill.setmName(editName.getText().toString());
-                //PersonOrderListAdapter mAdapter = (PersonOrderListAdapter) RecyclerView.getAdapter().getList();
-
-               // mPersonBill.setmPersonOrders((PersonOrderListAdapter) RecyclerView.getAdapter().getList());
+                mPersonBill = new PersonBill();
+                mPersonBill.setmName(editTextName.getText().toString());
+                mPersonBill.setmPersonOrders(mPersonOrderList);
 
                 Intent intent = new Intent(this, PeopleBillListActivity.class);
+                intent.putExtra(PERSON_ORDER_BILL, mPersonBill);
                 startActivity(intent);
                 return true;
             default:

@@ -140,6 +140,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tip_text_view_10_percent"
                             android:hint="10% amount"/>
                     </LinearLayout>
                     <LinearLayout
@@ -154,6 +155,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tip_text_view_15_percent"
                             android:hint="15% amount"/>
                     </LinearLayout>
                     <LinearLayout
@@ -168,6 +170,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tip_text_view_20_percent"
                             android:hint="20% amount"/>
                     </LinearLayout>
                 </LinearLayout>

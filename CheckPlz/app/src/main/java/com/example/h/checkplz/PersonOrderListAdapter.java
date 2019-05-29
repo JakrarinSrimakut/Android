@@ -121,7 +121,7 @@ public class PersonOrderListAdapter extends
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     PersonOrder currentPersonOrder = mPersonOrderList.get(getAdapterPosition());
                     if(s.toString().isEmpty()){
-                        currentPersonOrder.setmOrderAmount(0);
+                        currentPersonOrder.setmOrderAmount(1);
                     }else{
                         currentPersonOrder.setmOrderAmount(Integer.parseInt(s.toString()));
                     }

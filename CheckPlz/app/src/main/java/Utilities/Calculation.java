@@ -33,9 +33,20 @@ public class Calculation {
 //
 //
 //    }
+
     //return tip 10%
+    public static double calculate10PercentTip(double totalBill){
+        return totalBill * 0.1;
+    }
 
     //return tip 15%
+    public static double calculate15PercentTip(double totalBill){
+        return totalBill * 0.15;
+    }
 
     //return tip 20%
+    public static double calculate20PercentTip(double totalBill){
+        return totalBill * 0.2;
+    }
+
 }
