@@ -130,7 +130,6 @@ public class PersonOrderListAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    Log.d("OrderAmount", String.valueOf(mPersonOrderList.get(getAdapterPosition()).getmOrderAmount()));
                     sendListToAcitivity(itemView);
                 }
             });

@@ -95,5 +95,4 @@ public class PeopleBillListAdapter extends
     public int getItemCount() {
         return mPeopleBillList.size();
     }
-
 }
