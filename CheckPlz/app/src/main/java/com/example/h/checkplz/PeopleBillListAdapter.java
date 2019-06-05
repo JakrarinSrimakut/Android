@@ -18,44 +18,15 @@ import java.util.List;
 public class PeopleBillListAdapter extends
         RecyclerView.Adapter<PeopleBillListAdapter.ViewHolder> {
 
-
-    // Provide a direct reference to each of the views within a data item
-    // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
-        public TextView nameTextView;
-        public TextView tipTextView;
-        public TextView taxTextView;
-        public TextView totalTextView;
-        public TextView tipAmountTextView;
-        public TextView taxAmountTextView;
-        public TextView totalAmountTextView;
-
-        // We also create a constructor that accepts the entire item row
-        // and does the view lookups to find each subview
-        public ViewHolder(View itemView){
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
-            super(itemView);
-
-            nameTextView = (TextView) itemView.findViewById(R.id.person_name_list_activity);
-            tipTextView = (TextView) itemView.findViewById(R.id.person_tip);
-            taxTextView = (TextView) itemView.findViewById(R.id.person_tax);
-            totalTextView = (TextView) itemView.findViewById(R.id.person_total);
-            tipAmountTextView = (TextView) itemView.findViewById(R.id.person_tip_amount);
-            taxAmountTextView = (TextView) itemView.findViewById(R.id.person_tax_amount);
-            totalAmountTextView = (TextView) itemView.findViewById(R.id.person_total_amount);
-
-        }
-    }
+    private OnBillListener mOnBillListener;
 
     // Store a member variable for the contacts
     private List<PersonBill> mPeopleBillList;
 
     // Pass in the contact array into the constructor
-    public PeopleBillListAdapter(List<PersonBill> peopleBillList){
+    public PeopleBillListAdapter(List<PersonBill> peopleBillList, OnBillListener onBillListener){
         mPeopleBillList=peopleBillList;
+        this.mOnBillListener = onBillListener; //onBillListener from PeoplBillListActivity set to globl OnBillListener
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -68,7 +39,7 @@ public class PeopleBillListAdapter extends
         View contactView = inflater.inflate(R.layout.item_person, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(contactView);
+        ViewHolder viewHolder = new ViewHolder(contactView, mOnBillListener);//Global OnBillListener sent to viewholder by contstructor
 
         return viewHolder;
     }
@@ -94,5 +65,48 @@ public class PeopleBillListAdapter extends
     @Override
     public int getItemCount() {
         return mPeopleBillList.size();
+    }
+
+    // Provide a direct reference to each of the views within a data item
+    // Used to cache the views within the item layout for fast access
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        // Your holder should contain a member variable
+        // for any view that will be set as you render a row
+        public TextView nameTextView;
+        public TextView tipTextView;
+        public TextView taxTextView;
+        public TextView totalTextView;
+        public TextView tipAmountTextView;
+        public TextView taxAmountTextView;
+        public TextView totalAmountTextView;
+        OnBillListener onBillListener;
+        // We also create a constructor that accepts the entire item row
+        // and does the view lookups to find each subview
+        public ViewHolder(View itemView, OnBillListener onBillListener){
+            // Stores the itemView in a public final member variable that can be used
+            // to access the context from any ViewHolder instance.
+            super(itemView);
+
+            nameTextView = (TextView) itemView.findViewById(R.id.person_name_list_activity);
+            tipTextView = (TextView) itemView.findViewById(R.id.person_tip);
+            taxTextView = (TextView) itemView.findViewById(R.id.person_tax);
+            totalTextView = (TextView) itemView.findViewById(R.id.person_total);
+            tipAmountTextView = (TextView) itemView.findViewById(R.id.person_tip_amount);
+            taxAmountTextView = (TextView) itemView.findViewById(R.id.person_tax_amount);
+            totalAmountTextView = (TextView) itemView.findViewById(R.id.person_total_amount);
+
+            this.onBillListener = onBillListener;//OnBillListener sent from an instantiation is set to global onBillListener in Class ViewHolder meaning all viewholder withing recyclerview will have an onBillListener
+            itemView.setOnClickListener(this);//When itemView is clicked the onClick method is called which calls onBillClick
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            onBillListener.onBillClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnBillListener{
+        void onBillClick(int position);
     }
 }

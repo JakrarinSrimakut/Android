@@ -20,7 +20,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PeopleBillListActivity extends AppCompatActivity {
+public class PeopleBillListActivity extends AppCompatActivity implements PeopleBillListAdapter.OnBillListener{
     final String PERSON_ORDER_BILL = "person-order-bill";
     public static final String MY_BILL_LIST = "MyBillList";
     ArrayList<PersonBill> mPeopleBills;
@@ -90,7 +90,7 @@ public class PeopleBillListActivity extends AppCompatActivity {
         rvPeopleBillList = findViewById(R.id.rv_people_bill_list);
         rvPeopleBillList.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new PeopleBillListAdapter(mPeopleBills);
+        mAdapter = new PeopleBillListAdapter(mPeopleBills, this);//this can be used due to implements PeopleBillListAdapter.OnBillListener. Pass this OnBillListener to adapter
 
         rvPeopleBillList.setLayoutManager(mLayoutManager);
         rvPeopleBillList.setAdapter(mAdapter);
@@ -113,5 +113,14 @@ public class PeopleBillListActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBillClick(int position) {
+        Log.d("OnBillClick", "Clicked");
+
+//        Intent intent = new Intent(this, PersonInputBillActivity.class);
+//        intent.putExtra("myBillList", mPeopleBills.get(position));
+//        startActivity(intent);
     }
 }
