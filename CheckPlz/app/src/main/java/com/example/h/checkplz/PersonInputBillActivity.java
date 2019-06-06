@@ -31,6 +31,8 @@ public class PersonInputBillActivity extends AppCompatActivity {
     final String FROM_PERSON_ORDER_LIST_ADAPTER = "from-person-order-list-adapter";
     final String UPDATE_PERSON_ORDER_LIST = "update-person-order-list";
     final String PERSON_ORDER_BILL = "person-order-bill";
+    final String PERSON_ORDER_BILL_EDIT = "person-order-bill-edit";
+
     private ArrayList<PersonOrder> personOrders = new ArrayList<>();
     private PersonBill mPersonBill;
     private ArrayList<PersonOrder> mPersonOrderList;
@@ -52,6 +54,14 @@ public class PersonInputBillActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("PersonInputBillActivity");
+
+        //Edit mode
+        Bundle extra = getIntent().getExtras();
+
+        if(extra != null){
+            personOrders = extra.getParcelableArrayList(PERSON_ORDER_BILL_EDIT);
+            //TODO: get intent for edit
+        }
 
         mPersonBill = new PersonBill();
 
@@ -94,6 +104,8 @@ public class PersonInputBillActivity extends AppCompatActivity {
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageListReceiver,
                 new IntentFilter(FROM_PERSON_ORDER_LIST_ADAPTER));
+
+
         /*Init PersonBill to hold person name and person's orders in arraylist
         * only when menu check list is click. But how about editing? When you edit and click check
         * mark it will generate a new instance. Answer: make a private PersonBill member

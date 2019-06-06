@@ -22,6 +22,7 @@ import java.util.List;
 
 public class PeopleBillListActivity extends AppCompatActivity implements PeopleBillListAdapter.OnBillListener{
     final String PERSON_ORDER_BILL = "person-order-bill";
+    final String PERSON_ORDER_BILL_EDIT = "person-order-bill-edit";
     public static final String MY_BILL_LIST = "MyBillList";
     ArrayList<PersonBill> mPeopleBills;
     private RecyclerView rvPeopleBillList;
@@ -119,8 +120,8 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
     public void onBillClick(int position) {
         Log.d("OnBillClick", "Clicked");
 
-//        Intent intent = new Intent(this, PersonInputBillActivity.class);
-//        intent.putExtra("myBillList", mPeopleBills.get(position));
-//        startActivity(intent);
+        Intent intent = new Intent(this, PersonInputBillActivity.class);
+        intent.putExtra("myBillList", mPeopleBills.get(position));
+        startActivity(intent);
     }
 }
