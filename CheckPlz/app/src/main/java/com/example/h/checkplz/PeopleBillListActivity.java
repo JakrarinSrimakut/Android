@@ -83,7 +83,7 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             PersonBill mPersonBill = extras.getParcelable(PERSON_ORDER_BILL);
-            mPeopleBills.add(mPersonBill);
+            mPeopleBills.add(mPersonBill);//TODO: if statement for new person bill or edited one
         }
     }
 
@@ -118,10 +118,10 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
 
     @Override
     public void onBillClick(int position) {
-        Log.d("OnBillClick", "Clicked");
+        Log.d("OnBillClick", "PersonOrdersSize:" + String.valueOf(mPeopleBills.get(position).getmPersonOrders().size()));
 
         Intent intent = new Intent(this, PersonInputBillActivity.class);
-        intent.putExtra("myBillList", mPeopleBills.get(position));
+        intent.putExtra(PERSON_ORDER_BILL_EDIT, mPeopleBills.get(position));//Send personbill
         startActivity(intent);
     }
 }

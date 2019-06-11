@@ -64,7 +64,7 @@ public class PeopleBillListAdapter extends
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {
-        return mPeopleBillList.size();
+        return mPeopleBillList!=null ? mPeopleBillList.size():0;
     }
 
     // Provide a direct reference to each of the views within a data item

@@ -207,7 +207,7 @@ public class PersonOrderListAdapter extends
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {
-        return mPersonOrderList.size();
+        return mPersonOrderList!=null ? mPersonOrderList.size():0;
     }
 
     // Return PersonOrder list

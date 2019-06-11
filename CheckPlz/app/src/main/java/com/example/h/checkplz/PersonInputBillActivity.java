@@ -33,9 +33,9 @@ public class PersonInputBillActivity extends AppCompatActivity {
     final String PERSON_ORDER_BILL = "person-order-bill";
     final String PERSON_ORDER_BILL_EDIT = "person-order-bill-edit";
 
-    private ArrayList<PersonOrder> personOrders = new ArrayList<>();
+    //private ArrayList<PersonOrder> personOrders = new ArrayList<>();
     private PersonBill mPersonBill;
-    private ArrayList<PersonOrder> mPersonOrderList;
+    private ArrayList<PersonOrder> mPersonOrderList;//for adapter
 
     private EditText editTextName;
     private TextView textViewTotalAmount;
@@ -55,15 +55,10 @@ public class PersonInputBillActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("PersonInputBillActivity");
 
+        mPersonOrderList = new ArrayList<PersonOrder>();
         //Edit mode
         Bundle extra = getIntent().getExtras();
 
-        if(extra != null){
-            personOrders = extra.getParcelableArrayList(PERSON_ORDER_BILL_EDIT);
-            //TODO: get intent for edit
-        }
-
-        mPersonBill = new PersonBill();
 
         editTextName=(EditText) findViewById(R.id.person_name_input_bill_activity);
         textViewTotalAmount=(TextView) findViewById(R.id.person_total_amount);
@@ -71,19 +66,21 @@ public class PersonInputBillActivity extends AppCompatActivity {
         textView15PercentTip = (TextView) findViewById(R.id.tip_text_view_15_percent);
         textView20PercentTip = (TextView) findViewById(R.id.tip_text_view_20_percent);
 
-
-
+        if(extra != null){
+            mPersonBill = extra.getParcelable(PERSON_ORDER_BILL_EDIT);
+            mPersonOrderList = mPersonBill.getmPersonOrders();
+            Log.d("InputBillActivity", "mPersonOrderListSize:" + String.valueOf(mPersonOrderList.size()));
+            editTextName.setText(mPersonBill.getmName());
+        }
+        else{
+            mPersonBill = new PersonBill();
+        }
         //Create recyclerView and adapter to be reference
         // Lookup the recyclerview in activity layout
         RecyclerView rvPersonOrdersList = (RecyclerView) findViewById(R.id.rv_person_order_list);
         
-
-        //Initialize Orders
-        PersonOrder pOrder = new PersonOrder();
-        personOrders.add(pOrder);
-        personOrders.add(new PersonOrder());
         //Create adapter passing the sample user data
-        adapter = new PersonOrderListAdapter(personOrders);
+        adapter = new PersonOrderListAdapter(mPersonOrderList);
         //Attach the adapter to the recyclerview to populate items
         rvPersonOrdersList.setAdapter(adapter);
         //Set Layout manager to position the items
@@ -95,9 +92,9 @@ public class PersonInputBillActivity extends AppCompatActivity {
         addOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                personOrders.add(new PersonOrder());
+                mPersonOrderList.add(new PersonOrder());
                 //update adapter personOrder with new person order
-                adapter.notifyItemInserted(personOrders.size()-1);//Make the view appear dynamically in recyclerview by notifying adapter of insertion.
+                adapter.notifyItemInserted(mPersonOrderList.size()-1);//Make the view appear dynamically in recyclerview by notifying adapter of insertion.
             }
         });
 
@@ -187,6 +184,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
                 intent.putExtra(PERSON_ORDER_BILL, (Parcelable) mPersonBill);
                 startActivity(intent);
                 return true;
+                //TODO: TODO: if statement for new person bill or edited one
             default:
                 return super.onOptionsItemSelected(item);
         }
