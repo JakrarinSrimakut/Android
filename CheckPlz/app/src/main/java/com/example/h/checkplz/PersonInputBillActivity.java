@@ -32,10 +32,12 @@ public class PersonInputBillActivity extends AppCompatActivity {
     final String UPDATE_PERSON_ORDER_LIST = "update-person-order-list";
     final String PERSON_ORDER_BILL = "person-order-bill";
     final String PERSON_ORDER_BILL_EDIT = "person-order-bill-edit";
+    final String PERSON_ORDER_BILL_POSITION = "person-order-bill-position";
 
     //private ArrayList<PersonOrder> personOrders = new ArrayList<>();
     private PersonBill mPersonBill;
     private ArrayList<PersonOrder> mPersonOrderList;//for adapter
+    private int mPersonPosition=-1;
 
     private EditText editTextName;
     private TextView textViewTotalAmount;
@@ -59,30 +61,33 @@ public class PersonInputBillActivity extends AppCompatActivity {
         //Edit mode
         Bundle extra = getIntent().getExtras();
 
-
         editTextName=(EditText) findViewById(R.id.person_name_input_bill_activity);
         textViewTotalAmount=(TextView) findViewById(R.id.person_total_amount);
         textView10PercentTip = (TextView) findViewById(R.id.tip_text_view_10_percent);
         textView15PercentTip = (TextView) findViewById(R.id.tip_text_view_15_percent);
         textView20PercentTip = (TextView) findViewById(R.id.tip_text_view_20_percent);
 
+        //If editing populate name and person's orders else create new person bill
         if(extra != null){
             mPersonBill = extra.getParcelable(PERSON_ORDER_BILL_EDIT);
+            mPersonPosition= extra.getInt(PERSON_ORDER_BILL_POSITION);
             mPersonOrderList = mPersonBill.getmPersonOrders();
-            Log.d("InputBillActivity", "mPersonOrderListSize:" + String.valueOf(mPersonOrderList.size()));
             editTextName.setText(mPersonBill.getmName());
         }
         else{
             mPersonBill = new PersonBill();
         }
+
         //Create recyclerView and adapter to be reference
         // Lookup the recyclerview in activity layout
         RecyclerView rvPersonOrdersList = (RecyclerView) findViewById(R.id.rv_person_order_list);
         
         //Create adapter passing the sample user data
         adapter = new PersonOrderListAdapter(mPersonOrderList);
+
         //Attach the adapter to the recyclerview to populate items
         rvPersonOrdersList.setAdapter(adapter);
+
         //Set Layout manager to position the items
         rvPersonOrdersList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -103,23 +108,9 @@ public class PersonInputBillActivity extends AppCompatActivity {
                 new IntentFilter(FROM_PERSON_ORDER_LIST_ADAPTER));
 
 
-        /*Init PersonBill to hold person name and person's orders in arraylist
-        * only when menu check list is click. But how about editing? When you edit and click check
-        * mark it will generate a new instance. Answer: make a private PersonBill member
-        * variable to set every different PersonBill
-        *
-        * How to populate PersonBill when it's sent here by intent? Send the PersonBill
-        * here then run methods to fill the activity. Call PersonOrderListAdapter constructor
-        * and send PersonOrderList
-        *
-        * To grab something. recyclerView.getAdapter().getList().get(position)
-         *
-         * Pass back PersonBill individually or as a List of Perosn Bill to
-         * PeopleBillListActivity? Individual is more efficient. No need to update
-         * entire list when it wasn't edited. But an PersonOrderListAdapter has
-         * a constructor for taking a list of PersonOrder.
-         *
-         */
+
+        //Note: To grab something. recyclerView.getAdapter().getList().get(position)
+
     }
 
     private BroadcastReceiver mMessageListReceiver = new BroadcastReceiver() {
@@ -127,11 +118,6 @@ public class PersonInputBillActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
 
             mPersonOrderList = intent.getParcelableArrayListExtra(UPDATE_PERSON_ORDER_LIST);
-
-//            for( int i=0; i<mPersonOrderList.size(); i++) {
-//                Log.d("personOrderList", "Row:" + i + " OrderName: " + mPersonOrderList.get(i).getmOrderName());
-//            }
-
             updateTotal();
             updateTips();
 
@@ -175,16 +161,15 @@ public class PersonInputBillActivity extends AppCompatActivity {
         switch (item.getItemId()){
             /*Send completed personBill to PeopleBillListActivity*/
             case R.id.action_done:
-                /*Init PersonBill by setting person's name and fill array of person's order*/
-                mPersonBill = new PersonBill();
+                /*Set person's name and fill array of person's order*/
                 mPersonBill.setmName(editTextName.getText().toString());
                 mPersonBill.setmPersonOrders(mPersonOrderList);
 
                 Intent intent = new Intent(this, PeopleBillListActivity.class);
                 intent.putExtra(PERSON_ORDER_BILL, (Parcelable) mPersonBill);
+                intent.putExtra(PERSON_ORDER_BILL_POSITION, mPersonPosition);
                 startActivity(intent);
                 return true;
-                //TODO: TODO: if statement for new person bill or edited one
             default:
                 return super.onOptionsItemSelected(item);
         }

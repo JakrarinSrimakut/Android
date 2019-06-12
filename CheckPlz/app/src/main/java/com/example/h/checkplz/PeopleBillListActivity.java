@@ -23,6 +23,7 @@ import java.util.List;
 public class PeopleBillListActivity extends AppCompatActivity implements PeopleBillListAdapter.OnBillListener{
     final String PERSON_ORDER_BILL = "person-order-bill";
     final String PERSON_ORDER_BILL_EDIT = "person-order-bill-edit";
+    final String PERSON_ORDER_BILL_POSITION = "person-order-bill-position";
     public static final String MY_BILL_LIST = "MyBillList";
     ArrayList<PersonBill> mPeopleBills;
     private RecyclerView rvPeopleBillList;
@@ -81,9 +82,15 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
 
     private void updateData() {
         Bundle extras = getIntent().getExtras();
-        if(extras != null){
+        if(extras != null){//TODO: Organize: create method for if statement
+            int personOrderBillPos = extras.getInt(PERSON_ORDER_BILL_POSITION);
             PersonBill mPersonBill = extras.getParcelable(PERSON_ORDER_BILL);
-            mPeopleBills.add(mPersonBill);//TODO: if statement for new person bill or edited one
+            if(personOrderBillPos>=0){//check if return person bill had pos if so edit else add
+                mPeopleBills.set(personOrderBillPos, mPersonBill);
+            }
+            else{
+                mPeopleBills.add(mPersonBill);
+            }
         }
     }
 
@@ -122,6 +129,7 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
 
         Intent intent = new Intent(this, PersonInputBillActivity.class);
         intent.putExtra(PERSON_ORDER_BILL_EDIT, mPeopleBills.get(position));//Send personbill
+        intent.putExtra(PERSON_ORDER_BILL_POSITION, position);//send the position of person bill to be able to edit the correct bill
         startActivity(intent);
     }
 }
