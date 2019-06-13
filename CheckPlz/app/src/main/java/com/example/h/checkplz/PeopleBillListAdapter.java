@@ -69,7 +69,7 @@ public class PeopleBillListAdapter extends
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
@@ -97,12 +97,18 @@ public class PeopleBillListAdapter extends
 
             this.onBillListener = onBillListener;//OnBillListener sent from an instantiation is set to global onBillListener in Class ViewHolder meaning all viewholder withing recyclerview will have an onBillListener
             itemView.setOnClickListener(this);//When itemView is clicked the onClick method is called which calls onBillClick
-
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             onBillListener.onBillClick(getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            //TODO: pop up window to delete item
+            return true;
         }
     }
 
