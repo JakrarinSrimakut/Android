@@ -1,17 +1,26 @@
 package com.example.h.checkplz;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.Constraints;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -30,6 +39,9 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
     private PeopleBillListAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static SharedPreferences mPrefs;
+    Button showPopupBtn, deletePopUpBtn;
+    PopupWindow popUpWindow;
+    ConstraintLayout peopleBillLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,5 +143,31 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
         intent.putExtra(PERSON_ORDER_BILL_EDIT, mPeopleBills.get(position));//Send personbill
         intent.putExtra(PERSON_ORDER_BILL_POSITION, position);//send the position of person bill to be able to edit the correct bill
         startActivity(intent);
+    }
+
+    @Override
+    public void onBillLongClick(int position) {
+        generatePopUpWindow(position);
+    }
+
+    public void generatePopUpWindow(final int position){
+        LayoutInflater layoutInflater = (LayoutInflater) PeopleBillListActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = layoutInflater.inflate(R.layout.popup,null);
+
+        peopleBillLayout = (ConstraintLayout) findViewById(R.id.people_bill_layout);
+
+        deletePopUpBtn = (Button) customView.findViewById(R.id.person_bill_delete);
+
+        popUpWindow = new PopupWindow(customView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+
+        popUpWindow.showAtLocation(peopleBillLayout, Gravity.CENTER, 0,0);
+
+        deletePopUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPeopleBills.remove(position);
+                popUpWindow.dismiss();
+            }
+        });
     }
 }

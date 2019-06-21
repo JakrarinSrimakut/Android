@@ -108,11 +108,13 @@ public class PeopleBillListAdapter extends
         @Override
         public boolean onLongClick(View view) {
             //TODO: pop up window to delete item
+            onBillListener.onBillLongClick(getAdapterPosition());
             return true;
         }
     }
 
     public interface OnBillListener{
         void onBillClick(int position);
+        void onBillLongClick(int position);
     }
 }
