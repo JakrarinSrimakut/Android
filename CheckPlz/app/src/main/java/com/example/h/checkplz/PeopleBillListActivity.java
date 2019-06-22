@@ -166,6 +166,7 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
             @Override
             public void onClick(View view) {
                 mPeopleBills.remove(position);
+                mAdapter.notifyItemRemoved(position);
                 popUpWindow.dismiss();
             }
         });
