@@ -21,6 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:id="@+id/name_layout"
                 android:paddingLeft="10dp">
 
                 <TextView
@@ -39,6 +40,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/columns_titles_layout"
                 android:orientation="horizontal">
 
                 <TextView
@@ -94,13 +96,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/bottom_layout"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_alignParentBottom="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:id="@+id/tip_layout"
                 android:layout_weight="1">
                 <LinearLayout
@@ -113,7 +115,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tip:"/>
+                        android:text="Gratuity:"/>
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -176,11 +178,28 @@
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/dark_line_separator_bottom_tip_expenses"
+                android:background="@android:color/darker_gray">
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
+                android:id="@+id/expenses_layout"
                 android:layout_weight="1">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Subtotal:"/>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tax_layout">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -192,6 +211,12 @@
                         android:id="@+id/person_tax_amount"
                         android:layout_weight="1"
                         android:text="Tax Amount"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/total_layout">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -203,14 +228,14 @@
                         android:id="@+id/person_total_amount"
                         android:layout_weight="1"
                         android:text="0"/>
+                </LinearLayout>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add_order_button"
+                    android:text="@string/add_person_order"
+                    android:layout_weight="1" />
             </LinearLayout>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/add_order_button"
-                android:text="@string/add_person_order"
-                android:layout_weight="1" />
 
         </LinearLayout>
     </RelativeLayout>
