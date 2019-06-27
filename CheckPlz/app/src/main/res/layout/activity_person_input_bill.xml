@@ -177,13 +177,13 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/dark_line_separator_bottom_tip_expenses"
-                android:background="@android:color/darker_gray">
-            </LinearLayout>
+            <!--<LinearLayout-->
+                <!--android:layout_width="1dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:id="@+id/dark_line_separator_bottom_tip_expenses"-->
+                <!--android:background="@android:color/darker_gray">-->
+            <!--</LinearLayout>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
