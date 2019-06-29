@@ -71,7 +71,7 @@ public class PersonBill implements Parcelable {
         return mTip;
     }
 
-    public void setmTip(int mTip) {
+    public void setmTip(double mTip) {
         this.mTip = mTip;
     }
 

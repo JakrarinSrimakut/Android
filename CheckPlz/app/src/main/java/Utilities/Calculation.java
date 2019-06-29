@@ -10,6 +10,7 @@ public class Calculation {
     public static double calculateTotal(ArrayList<PersonOrder> mPersonOrderList) {
         double total = 0;
         double subTotal = 0;
+        double tip = 0;
         //double tax = 0;
         double calculateTipTenpercent = 0;
         total = calculateSubTotal(mPersonOrderList);

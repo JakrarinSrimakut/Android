@@ -40,6 +40,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
     private int mPersonPosition=-1;
 
     private EditText editTextName;
+    private EditText editTextTip;
     private TextView textViewTotalAmount;
     private TextView textView10PercentTip;
     private TextView textView15PercentTip;
@@ -62,6 +63,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
         Bundle extra = getIntent().getExtras();
 
         editTextName=(EditText) findViewById(R.id.person_name_input_bill_activity);
+        editTextTip=(EditText) findViewById(R.id.tip_edit_text_input);
         textViewTotalAmount=(TextView) findViewById(R.id.person_total_amount);
         textView10PercentTip = (TextView) findViewById(R.id.tip_text_view_10_percent);
         textView15PercentTip = (TextView) findViewById(R.id.tip_text_view_15_percent);
@@ -73,6 +75,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
             mPersonPosition= extra.getInt(PERSON_ORDER_BILL_POSITION);
             mPersonOrderList = mPersonBill.getmPersonOrders();
             editTextName.setText(mPersonBill.getmName());
+            editTextTip.setText(String.valueOf(mPersonBill.getmTip()));
         }
         else{
             mPersonBill = new PersonBill();
@@ -161,8 +164,12 @@ public class PersonInputBillActivity extends AppCompatActivity {
         switch (item.getItemId()){
             /*Send completed personBill to PeopleBillListActivity*/
             case R.id.action_done:
+                String tip = editTextTip.getText().toString();
                 /*Set person's name and fill array of person's order*/
                 mPersonBill.setmName(editTextName.getText().toString());
+                if(!tip.isEmpty()){
+                    mPersonBill.setmTip(Double.valueOf(tip));
+                }
                 mPersonBill.setmPersonOrders(mPersonOrderList);
 
                 Intent intent = new Intent(this, PeopleBillListActivity.class);
