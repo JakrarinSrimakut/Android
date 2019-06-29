@@ -42,6 +42,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
     private EditText editTextName;
     private EditText editTextTip;
     private TextView textViewTotalAmount;
+    private TextView textViewSubTotalAmount;
     private TextView textView10PercentTip;
     private TextView textView15PercentTip;
     private TextView textView20PercentTip;
@@ -65,6 +66,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
         editTextName=(EditText) findViewById(R.id.person_name_input_bill_activity);
         editTextTip=(EditText) findViewById(R.id.tip_edit_text_input);
         textViewTotalAmount=(TextView) findViewById(R.id.person_total_amount);
+        textViewSubTotalAmount=(TextView) findViewById(R.id.person_subtotal_amount);
         textView10PercentTip = (TextView) findViewById(R.id.tip_text_view_10_percent);
         textView15PercentTip = (TextView) findViewById(R.id.tip_text_view_15_percent);
         textView20PercentTip = (TextView) findViewById(R.id.tip_text_view_20_percent);
@@ -110,7 +112,12 @@ public class PersonInputBillActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageListReceiver,
                 new IntentFilter(FROM_PERSON_ORDER_LIST_ADAPTER));
 
+        editTextTip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
 
         //Note: To grab something. recyclerView.getAdapter().getList().get(position)
 
@@ -122,26 +129,34 @@ public class PersonInputBillActivity extends AppCompatActivity {
 
             mPersonOrderList = intent.getParcelableArrayListExtra(UPDATE_PERSON_ORDER_LIST);
             updateTotal();
+            updateSubTotal();
             updateTips();
 
         }
     };
 
     private void updateTips() {
-        double tenPercentTip = Calculation.calculate10PercentTip(mPersonBill.getmTotalBill());
-        double fifteenPercentTip = Calculation.calculate15PercentTip(mPersonBill.getmTotalBill());
-        double twentyPercentTip = Calculation.calculate20PercentTip(mPersonBill.getmTotalBill());
+        double tenPercentTip = Calculation.calculate10PercentTip(mPersonBill.getmSubTotalBill());
+        double fifteenPercentTip = Calculation.calculate15PercentTip(mPersonBill.getmSubTotalBill());
+        double twentyPercentTip = Calculation.calculate20PercentTip(mPersonBill.getmSubTotalBill());
         textView10PercentTip.setText(String.format("%.2f", tenPercentTip));
         textView15PercentTip.setText(String.format("%.2f", fifteenPercentTip));
         textView20PercentTip.setText(String.format("%.2f", twentyPercentTip));
 
     }
 
+    //Display the correct total value of bill
+    private void updateSubTotal() {
+        //
+        double subTotal = Calculation.calculateSubTotal(mPersonOrderList);
+        mPersonBill.setmSubTotalBill(subTotal);
+        textViewSubTotalAmount.setText(String.format("%.2f", subTotal));
+    }
 
     //Display the correct total value of bill
     private void updateTotal() {
         //
-        double total = Calculation.calculateTotal(mPersonOrderList);
+        double total = Calculation.calculateTotal(mPersonOrderList, mPersonBill.getmTip());
         mPersonBill.setmTotalBill(total);
         textViewTotalAmount.setText(String.format("%.2f", total));
     }

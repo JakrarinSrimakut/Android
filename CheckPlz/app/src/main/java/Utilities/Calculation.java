@@ -7,13 +7,13 @@ import java.util.ArrayList;
 public class Calculation {
 
     //returns total
-    public static double calculateTotal(ArrayList<PersonOrder> mPersonOrderList) {
+    public static double calculateTotal(ArrayList<PersonOrder> mPersonOrderList, double tip) {
         double total = 0;
         double subTotal = 0;
-        double tip = 0;
+        //double tip = 0;
         //double tax = 0;
-        double calculateTipTenpercent = 0;
-        total = calculateSubTotal(mPersonOrderList);
+
+        total = calculateSubTotal(mPersonOrderList) + tip;
         //tax = calculateTax(subTotal);
 
 

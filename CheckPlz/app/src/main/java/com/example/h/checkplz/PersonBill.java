@@ -11,6 +11,7 @@ public class PersonBill implements Parcelable {
     private String mName;
     private static int personCount=1;
     private double mTotalBill;
+    private double mSubTotalBill;
     private double mTax;
     private double mTip;
     private ArrayList<PersonOrder> mPersonOrders = new ArrayList<>();
@@ -18,6 +19,7 @@ public class PersonBill implements Parcelable {
     public PersonBill(){
         mName="Person"+personCount;
         mTotalBill=0;
+        mSubTotalBill=0;
         mTax=0;
         mTip=0;
         personCount++;
@@ -26,6 +28,7 @@ public class PersonBill implements Parcelable {
     protected PersonBill(Parcel in) {
         mName = in.readString();
         mTotalBill = in.readDouble();
+        mSubTotalBill = in.readDouble();
         mTax = in.readDouble();
         mTip = in.readDouble();
         mPersonOrders = in.createTypedArrayList(PersonOrder.CREATOR);
@@ -59,6 +62,13 @@ public class PersonBill implements Parcelable {
         this.mTotalBill = mTotalBill;
     }
 
+    public double getmSubTotalBill() {
+        return mSubTotalBill;
+    }
+
+    public void setmSubTotalBill(double mSubTotalBill) {
+        this.mSubTotalBill = mSubTotalBill;
+    }
     public double getmTax() {
         return mTax;
     }
@@ -92,6 +102,7 @@ public class PersonBill implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mName);
         parcel.writeDouble(mTotalBill);
+        parcel.writeDouble(mSubTotalBill);
         parcel.writeDouble(mTax);
         parcel.writeDouble(mTip);
         parcel.writeTypedList(mPersonOrders);
