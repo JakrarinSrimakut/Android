@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -112,10 +114,25 @@ public class PersonInputBillActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageListReceiver,
                 new IntentFilter(FROM_PERSON_ORDER_LIST_ADAPTER));
 
-        editTextTip.setOnClickListener(new View.OnClickListener() {
+        //Tip listenoer
+        editTextTip.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().isEmpty()){//prevent crash due to "" can't be converted to double
+                    mPersonBill.setmTip(0);
+                }else{
+                    mPersonBill.setmTip(Double.parseDouble(charSequence.toString()));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                updateTotal();
             }
         });
 
@@ -179,12 +196,12 @@ public class PersonInputBillActivity extends AppCompatActivity {
         switch (item.getItemId()){
             /*Send completed personBill to PeopleBillListActivity*/
             case R.id.action_done:
-                String tip = editTextTip.getText().toString();
+                //String tip = editTextTip.getText().toString();
                 /*Set person's name and fill array of person's order*/
                 mPersonBill.setmName(editTextName.getText().toString());
-                if(!tip.isEmpty()){
-                    mPersonBill.setmTip(Double.valueOf(tip));
-                }
+//                if(!tip.isEmpty()){
+//                    mPersonBill.setmTip(Double.valueOf(tip));
+//                }
                 mPersonBill.setmPersonOrders(mPersonOrderList);
 
                 Intent intent = new Intent(this, PeopleBillListActivity.class);

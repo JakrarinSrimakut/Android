@@ -68,7 +68,7 @@ public class PersonOrderListAdapter extends
                     }catch(ArrayIndexOutOfBoundsException e){
                         e.printStackTrace();
                     }
-                    sendListToAcitivity(itemView);
+                    sendListToActivity(itemView);
                 }
             });
             personOrderNameEditText.addTextChangedListener(new TextWatcher() {
@@ -87,7 +87,7 @@ public class PersonOrderListAdapter extends
                 @Override
                 public void afterTextChanged(Editable s) {
                     Log.d("OrderName", String.valueOf(mPersonOrderList.get(getAdapterPosition()).getmOrderName()));
-                    sendListToAcitivity(itemView);
+                    sendListToActivity(itemView);
                 }
             });
             personOrderCostEditText.addTextChangedListener(new TextWatcher() {
@@ -109,7 +109,7 @@ public class PersonOrderListAdapter extends
                 @Override
                 public void afterTextChanged(Editable s) {
                     Log.d("OrderCost", String.valueOf(mPersonOrderList.get(getAdapterPosition()).getmOrderCost()));
-                    sendListToAcitivity(itemView);
+                    sendListToActivity(itemView);
                 }
             });
             personOrderMultipleAmountEditText.addTextChangedListener(new TextWatcher() {
@@ -130,7 +130,7 @@ public class PersonOrderListAdapter extends
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    sendListToAcitivity(itemView);
+                    sendListToActivity(itemView);
                 }
             });
         }
@@ -190,7 +190,7 @@ public class PersonOrderListAdapter extends
     }
 
     //Send personOrderList to PersonInputBillActivity
-    private void sendListToAcitivity(View itemView){
+    private void sendListToActivity(View itemView){
         Intent intent = new Intent(FROM_PERSON_ORDER_LIST_ADAPTER);
         intent.putExtra(UPDATE_PERSON_ORDER_LIST, mPersonOrderList);
         LocalBroadcastManager.getInstance(itemView.getContext()).sendBroadcast(intent);
