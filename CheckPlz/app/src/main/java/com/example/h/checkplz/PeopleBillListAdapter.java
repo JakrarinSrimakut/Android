@@ -53,6 +53,8 @@ public class PeopleBillListAdapter extends
         // Set item views based on your views and data model
         TextView textViewName = viewHolder.nameTextView;
         textViewName.setText(personBill.getmName());
+        TextView textViewSubtotal = viewHolder.subtotalAmountTextView;
+        textViewSubtotal.setText(Double.toString(personBill.getmSubTotalBill()));
         TextView textViewTip = viewHolder.tipAmountTextView;
         textViewTip.setText(Double.toString(personBill.getmTip()));
         TextView textViewTax = viewHolder.taxAmountTextView;
@@ -73,9 +75,11 @@ public class PeopleBillListAdapter extends
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
+        public TextView subtotalTextView;
         public TextView tipTextView;
         public TextView taxTextView;
         public TextView totalTextView;
+        public TextView subtotalAmountTextView;
         public TextView tipAmountTextView;
         public TextView taxAmountTextView;
         public TextView totalAmountTextView;
@@ -88,9 +92,11 @@ public class PeopleBillListAdapter extends
             super(itemView);
 
             nameTextView = (TextView) itemView.findViewById(R.id.person_name_list_activity);
+            subtotalTextView = (TextView) itemView.findViewById(R.id.person_subtotal);
             tipTextView = (TextView) itemView.findViewById(R.id.person_tip);
             taxTextView = (TextView) itemView.findViewById(R.id.person_tax);
             totalTextView = (TextView) itemView.findViewById(R.id.person_total);
+            subtotalAmountTextView = (TextView) itemView.findViewById(R.id.person_subtotal_amount);
             tipAmountTextView = (TextView) itemView.findViewById(R.id.person_tip_amount);
             taxAmountTextView = (TextView) itemView.findViewById(R.id.person_tax_amount);
             totalAmountTextView = (TextView) itemView.findViewById(R.id.person_total_amount);
