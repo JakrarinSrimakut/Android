@@ -21,13 +21,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import Utilities.Calculation;
 
 public class PeopleBillListActivity extends AppCompatActivity implements PeopleBillListAdapter.OnBillListener{
     final String PERSON_ORDER_BILL = "person-order-bill";
@@ -42,6 +47,9 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
     Button showPopupBtn, deletePopUpBtn;
     PopupWindow popUpWindow;
     ConstraintLayout peopleBillLayout;
+    TextView textViewPersonSubtotalAmount;
+    TextView textViewPersonGratuityAmount;
+    TextView textViewPersonTotalAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,10 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("PeopleBillListActivity");
+
+        textViewPersonSubtotalAmount = (TextView)findViewById(R.id.person_subtotal_amount);
+        textViewPersonGratuityAmount = (TextView)findViewById(R.id.person_gratuity_amount);
+        textViewPersonTotalAmount = (TextView)findViewById(R.id.person_total_amount);
 
         loadData();
         buildRecyclerView();
@@ -103,7 +115,17 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
             else{
                 mPeopleBills.add(mPersonBill);
             }
+            //TODO: Create a method update party's bill that calls methods in Calculation Class that return subtotal,gratuity and total to be set in party's bill
+            if(mPersonBill != null){
+                updatePartyBill();
+            }
         }
+    }
+
+    private void updatePartyBill() {
+        textViewPersonSubtotalAmount.setText(String.valueOf(Calculation.calculatePartySubtotal(mPeopleBills)));
+        textViewPersonGratuityAmount.setText(String.valueOf(Calculation.calculatePartyGratuity(mPeopleBills)));
+        textViewPersonTotalAmount.setText(String.valueOf(Calculation.calculatePartyTotal(mPeopleBills)));
     }
 
     private void buildRecyclerView() {

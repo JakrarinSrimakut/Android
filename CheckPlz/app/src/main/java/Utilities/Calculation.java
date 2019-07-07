@@ -1,5 +1,6 @@
 package Utilities;
 
+import com.example.h.checkplz.PersonBill;
 import com.example.h.checkplz.PersonOrder;
 
 import java.util.ArrayList;
@@ -49,5 +50,30 @@ public class Calculation {
     public static double calculate20PercentTip(double totalBill){
         return totalBill * 0.2;
     }
+
+    public static double calculatePartySubtotal(ArrayList<PersonBill> mPeopleBills) {
+        double partySubTotal = 0;
+        for (PersonBill pBill: mPeopleBills) {
+            partySubTotal += pBill.getmSubTotalBill();
+        }
+        return partySubTotal;
+    }
+
+    public static double calculatePartyGratuity(ArrayList<PersonBill> mPeopleBills) {
+        double partyGratuity = 0;
+        for (PersonBill pBill: mPeopleBills) {
+            partyGratuity += pBill.getmTip();
+        }
+        return partyGratuity;
+    }
+
+    public static double calculatePartyTotal(ArrayList<PersonBill> mPeopleBills) {
+        double partyTotal = 0;
+        for (PersonBill pBill: mPeopleBills) {
+            partyTotal += pBill.getmTotalBill();
+        }
+        return partyTotal;
+    }
+
 
 }
