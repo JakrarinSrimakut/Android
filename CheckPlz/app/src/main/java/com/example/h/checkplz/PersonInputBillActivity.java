@@ -126,7 +126,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
                 if(charSequence.toString().isEmpty()){//prevent crash due to "" can't be converted to double
                     mPersonBill.setmTip(0);
                 }else{
-                    mPersonBill.setmTip(Double.parseDouble(charSequence.toString()));
+                    mPersonBill.setmTip(Double.parseDouble(String.format("%.2f", Double.parseDouble(charSequence.toString()))));
                 }
             }
 

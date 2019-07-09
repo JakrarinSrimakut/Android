@@ -99,16 +99,15 @@ public class PersonOrderListAdapter extends
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     PersonOrder currentPersonOrder = mPersonOrderList.get(getAdapterPosition());
                     if(s.toString().isEmpty()){//prevent crash due to "" can't be converted to double
-                        currentPersonOrder.setmOrderCost(0);
+                        currentPersonOrder.setmOrderCost(0.00);
                     }else{
-                        currentPersonOrder.setmOrderCost(Double.parseDouble(s.toString()));
+                        currentPersonOrder.setmOrderCost(Double.parseDouble(String.format("%.2f", Double.parseDouble(s.toString()))));
                     }
                     mPersonOrderList.set(getAdapterPosition(), currentPersonOrder);
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    Log.d("OrderCost", String.valueOf(mPersonOrderList.get(getAdapterPosition()).getmOrderCost()));
                     sendListToActivity(itemView);
                 }
             });
