@@ -159,8 +159,6 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
 
     @Override
     public void onBillClick(int position) {
-        Log.d("OnBillClick", "PersonOrdersSize:" + String.valueOf(mPeopleBills.get(position).getmPersonOrders().size()));
-
         Intent intent = new Intent(this, PersonInputBillActivity.class);
         intent.putExtra(PERSON_ORDER_BILL_EDIT, mPeopleBills.get(position));//Send personbill
         intent.putExtra(PERSON_ORDER_BILL_POSITION, position);//send the position of person bill to be able to edit the correct bill

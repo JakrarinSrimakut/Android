@@ -10,13 +10,13 @@ public class Calculation {
     //returns total
     public static double calculateTotal(ArrayList<PersonOrder> mPersonOrderList, double tip) {
         double total = 0;
-        double subTotal = 0;
-        //double tip = 0;
         //double tax = 0;
 
+        if(mPersonOrderList.isEmpty()){
+            return tip;
+        }
         total = calculateSubTotal(mPersonOrderList) + tip;
         //tax = calculateTax(subTotal);
-
 
         return total;
     }
