@@ -101,6 +101,9 @@ public class PersonOrderListAdapter extends
                     if(s.toString().isEmpty()){//prevent crash due to "" can't be converted to double
                         currentPersonOrder.setmOrderCost(0.00);
                     }else{
+                        if(s.toString().equals(".")){
+                            s = "0.";
+                        }
                         currentPersonOrder.setmOrderCost(Double.parseDouble(String.format("%.2f", Double.parseDouble(s.toString()))));
                     }
                     mPersonOrderList.set(getAdapterPosition(), currentPersonOrder);
