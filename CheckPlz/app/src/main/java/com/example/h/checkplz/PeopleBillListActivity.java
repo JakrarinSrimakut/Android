@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -47,9 +48,12 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
     Button showPopupBtn, deletePopUpBtn;
     PopupWindow popUpWindow;
     ConstraintLayout peopleBillLayout;
-    TextView textViewPersonSubtotalAmount;
-    TextView textViewPersonGratuityAmount;
-    TextView textViewPersonTotalAmount;
+    TextView textViewPartySubtotalAmount;
+    TextView textViewPartyGratuityAmount;
+    TextView textViewPartyTotalAmount;
+    EditText editTextPartyTaxInput;
+    EditText editTextPartyTotalInput;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +63,11 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("PeopleBillListActivity");
 
-        textViewPersonSubtotalAmount = (TextView)findViewById(R.id.person_subtotal_amount);
-        textViewPersonGratuityAmount = (TextView)findViewById(R.id.person_gratuity_amount);
-        textViewPersonTotalAmount = (TextView)findViewById(R.id.person_total_amount);
+        textViewPartySubtotalAmount = (TextView)findViewById(R.id.party_subtotal_amount);
+        textViewPartyGratuityAmount = (TextView)findViewById(R.id.party_gratuity_amount);
+        textViewPartyTotalAmount = (TextView)findViewById(R.id.party_total_amount);
+        editTextPartyTaxInput = (EditText)findViewById(R.id.tax_edit_text_input);
+        editTextPartyTotalInput = (EditText)findViewById(R.id.total_edit_text_input);
 
         loadData();
         buildRecyclerView();
@@ -123,9 +129,9 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
     }
 
     private void updatePartyBill() {
-        textViewPersonSubtotalAmount.setText(String.valueOf(Calculation.calculatePartySubtotal(mPeopleBills)));
-        textViewPersonGratuityAmount.setText(String.valueOf(Calculation.calculatePartyGratuity(mPeopleBills)));
-        textViewPersonTotalAmount.setText(String.valueOf(Calculation.calculatePartyTotal(mPeopleBills)));
+        textViewPartySubtotalAmount.setText(String.valueOf(Calculation.calculatePartySubtotal(mPeopleBills)));
+        textViewPartyGratuityAmount.setText(String.valueOf(Calculation.calculatePartyGratuity(mPeopleBills)));
+        textViewPartyTotalAmount.setText(String.valueOf(Calculation.calculatePartyTotal(mPeopleBills)));
     }
 
     private void buildRecyclerView() {
