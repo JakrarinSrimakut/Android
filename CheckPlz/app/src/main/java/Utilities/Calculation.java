@@ -30,7 +30,7 @@ public class Calculation {
         return subTotal;
     }
 
-    //return tax
+    //TODO: return tax
 //    public static double calculateTax(double subTotal){
 //
 //

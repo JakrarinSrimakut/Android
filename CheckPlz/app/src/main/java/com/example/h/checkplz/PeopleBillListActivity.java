@@ -55,6 +55,7 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
     TextView textViewPartyTotalAmount;
     EditText editTextPartyTaxInput;
     EditText editTextPartyTotalInput;
+    Button buttonCalculateTax;
 
 
     @Override
@@ -70,41 +71,16 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
         textViewPartyTotalAmount = (TextView)findViewById(R.id.party_total_amount);
         editTextPartyTaxInput = (EditText)findViewById(R.id.tax_edit_text_input);
         editTextPartyTotalInput = (EditText)findViewById(R.id.total_edit_text_input);
+        buttonCalculateTax = (Button)findViewById(R.id.tax_calculate_button);
 
-        editTextPartyTaxInput.addTextChangedListener(new TextWatcher() {
+        //when button is click get editTextPartyTaxInput and editTextPartyTotalInput to calculate tax
+        buttonCalculateTax.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
+            public void onClick(View view) {
+                //TODO: call Calculate.updateTax(partyTax, partyTotal);
             }
         });
 
-        editTextPartyTotalInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        
         loadData();
         buildRecyclerView();
         updateData();
@@ -146,9 +122,10 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
         }
     }
 
+    //TODO: update tax for all bills
     private void updateData() {
         Bundle extras = getIntent().getExtras();
-        if(extras != null){//TODO: Organize: create method for if statement
+        if(extras != null){
             int personOrderBillPos = extras.getInt(PERSON_ORDER_BILL_POSITION);
             PersonBill mPersonBill = extras.getParcelable(PERSON_ORDER_BILL);
             if(personOrderBillPos>=0){//check if return person bill had pos if so edit else add
@@ -157,7 +134,6 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
             else{
                 mPeopleBills.add(mPersonBill);
             }
-            //TODO: Create a method update party's bill that calls methods in Calculation Class that return subtotal,gratuity and total to be set in party's bill
             if(mPersonBill != null){
                 updatePartyBill();
             }
