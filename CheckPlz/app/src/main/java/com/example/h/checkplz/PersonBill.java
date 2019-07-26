@@ -12,7 +12,8 @@ public class PersonBill implements Parcelable {
     private static int personCount=1;
     private double mTotalBill;
     private double mSubTotalBill;
-    private double mTax;
+    private double mTaxAmount;
+    private double mTaxPercentage;
     private double mTip;
     private ArrayList<PersonOrder> mPersonOrders = new ArrayList<>();
 
@@ -20,7 +21,7 @@ public class PersonBill implements Parcelable {
         mName="Person"+personCount;
         mTotalBill=0;
         mSubTotalBill=0;
-        mTax=0;
+        mTaxAmount=0;
         mTip=0;
         personCount++;
     }
@@ -29,7 +30,7 @@ public class PersonBill implements Parcelable {
         mName = in.readString();
         mTotalBill = in.readDouble();
         mSubTotalBill = in.readDouble();
-        mTax = in.readDouble();
+        mTaxAmount = in.readDouble();
         mTip = in.readDouble();
         mPersonOrders = in.createTypedArrayList(PersonOrder.CREATOR);
     }
@@ -69,12 +70,12 @@ public class PersonBill implements Parcelable {
     public void setmSubTotalBill(double mSubTotalBill) {
         this.mSubTotalBill = mSubTotalBill;
     }
-    public double getmTax() {
-        return mTax;
+    public double getmTaxAmount() {
+        return mTaxAmount;
     }
 
-    public void setmTax(double mTax) {
-        this.mTax = mTax;
+    public void setmTaxAmount(double mTaxAmount) {
+        this.mTaxAmount = mTaxAmount;
     }
 
     public double getmTip() {
@@ -103,8 +104,16 @@ public class PersonBill implements Parcelable {
         parcel.writeString(mName);
         parcel.writeDouble(mTotalBill);
         parcel.writeDouble(mSubTotalBill);
-        parcel.writeDouble(mTax);
+        parcel.writeDouble(mTaxAmount);
         parcel.writeDouble(mTip);
         parcel.writeTypedList(mPersonOrders);
+    }
+
+    public double getmTaxPercentage() {
+        return mTaxPercentage;
+    }
+
+    public void setmTaxPercentage(double mTaxPercentage) {
+        this.mTaxPercentage = mTaxPercentage;
     }
 }

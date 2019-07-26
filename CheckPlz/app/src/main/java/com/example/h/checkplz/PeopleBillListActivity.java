@@ -100,10 +100,18 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
 
         //TODO: update tax for all bills
         //update each bill with new tax
-        for(int i = 0; i < mPeopleBills.size(); i++){
-            //note:change setmTax to take double in case failure
-            mPeopleBills.get(i).setmTax(tax);
+        if(tax != 0){
+            for(int i = 0; i < mPeopleBills.size(); i++){
+                //set taxPercentage to each bill
+                mPeopleBills.get(i).setmTaxPercentage(tax);
+                //calculate Total with new tax for each bill
+                //create new Calculation method Calculation.calculateTotalPeopleBillListActivity(double subtotal,double tax) which return total to be set for bill
+                //update RV
+                mAdapter.notifyItemChanged(i);
+            }
+            //notify adapter of tax change?
         }
+
     }
 
     //Save the state of bill list

@@ -32,7 +32,7 @@ public class Calculation {
 
     //return tax percentage by calculating the tax and total input amount
     public static double calculateTax(double taxInput, double totalInput){
-        double tax = totalInput/taxInput;
+        double tax = taxInput/totalInput;
         if(Double.isNaN(tax)){
             return 0;
         }
