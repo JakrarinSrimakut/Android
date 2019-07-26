@@ -73,7 +73,7 @@ public class PersonBill implements Parcelable {
         return mTax;
     }
 
-    public void setmTax(int mTax) {
+    public void setmTax(double mTax) {
         this.mTax = mTax;
     }
 

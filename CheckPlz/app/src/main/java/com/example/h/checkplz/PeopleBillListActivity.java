@@ -56,7 +56,7 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
     EditText editTextPartyTaxInput;
     EditText editTextPartyTotalInput;
     Button buttonCalculateTax;
-
+    private double tax;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,16 +77,7 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
         buttonCalculateTax.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: call Calculate.updateTax(partyTax, partyTotal)
-
-                if(editTextPartyTaxInput.getText().toString().isEmpty()){
-                    editTextPartyTaxInput.setText("0");
-                }
-                if(editTextPartyTotalInput.getText().toString().isEmpty()){
-                    editTextPartyTotalInput.setText("0");
-                }
-                double taxPercent = Calculation.calculateTax(Double.parseDouble(editTextPartyTaxInput.getText().toString()),Double.parseDouble(editTextPartyTotalInput.getText().toString()));
-                Log.d("tax", String.valueOf(taxPercent));
+                taxSetup();
             }
         });
 
@@ -96,7 +87,24 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
 
     }
 
+    //calculate and set tax to all existing bill. save tax in var to be used for new bills
+    private void taxSetup(){
 
+        if(editTextPartyTaxInput.getText().toString().isEmpty()){
+            editTextPartyTaxInput.setText("0");
+        }
+        if(editTextPartyTotalInput.getText().toString().isEmpty()){
+            editTextPartyTotalInput.setText("0");
+        }
+        tax = Calculation.calculateTax(Double.parseDouble(editTextPartyTaxInput.getText().toString()),Double.parseDouble(editTextPartyTotalInput.getText().toString()));
+
+        //TODO: update tax for all bills
+        //update each bill with new tax
+        for(int i = 0; i < mPeopleBills.size(); i++){
+            //note:change setmTax to take double in case failure
+            mPeopleBills.get(i).setmTax(tax);
+        }
+    }
 
     //Save the state of bill list
     @Override
@@ -131,7 +139,8 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
         }
     }
 
-    //TODO: update tax for all bills
+
+    //get extras if there is one from PersonInputBillActivity and manage bills accordingly
     private void updateData() {
         Bundle extras = getIntent().getExtras();
         if(extras != null){
