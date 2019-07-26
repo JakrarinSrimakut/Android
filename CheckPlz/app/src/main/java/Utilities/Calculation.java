@@ -30,11 +30,14 @@ public class Calculation {
         return subTotal;
     }
 
-    //TODO: return tax
-//    public static double calculateTax(double subTotal){
-//
-//
-//    }
+    //return tax percentage by calculating the tax and total input amount
+    public static double calculateTax(double taxInput, double totalInput){
+        double tax = totalInput/taxInput;
+        if(Double.isNaN(tax)){
+            return 0;
+        }
+        return tax;
+    }
 
     //return tip 10%
     public static double calculate10PercentTip(double totalBill){

@@ -77,7 +77,16 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
         buttonCalculateTax.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: call Calculate.updateTax(partyTax, partyTotal);
+                //TODO: call Calculate.updateTax(partyTax, partyTotal)
+
+                if(editTextPartyTaxInput.getText().toString().isEmpty()){
+                    editTextPartyTaxInput.setText("0");
+                }
+                if(editTextPartyTotalInput.getText().toString().isEmpty()){
+                    editTextPartyTotalInput.setText("0");
+                }
+                double taxPercent = Calculation.calculateTax(Double.parseDouble(editTextPartyTaxInput.getText().toString()),Double.parseDouble(editTextPartyTotalInput.getText().toString()));
+                Log.d("tax", String.valueOf(taxPercent));
             }
         });
 
