@@ -58,7 +58,7 @@ public class PeopleBillListAdapter extends
         TextView textViewTip = viewHolder.tipAmountTextView;
         textViewTip.setText(Double.toString(personBill.getmTip()));
         TextView textViewTax = viewHolder.taxAmountTextView;
-        textViewTax.setText(Double.toString(personBill.getmTax()));
+        textViewTax.setText(Double.toString(personBill.getmTaxAmount()));
         TextView textViewTotal = viewHolder.totalAmountTextView;
         textViewTotal.setText(Double.toString(personBill.getmTotalBill()));
     }

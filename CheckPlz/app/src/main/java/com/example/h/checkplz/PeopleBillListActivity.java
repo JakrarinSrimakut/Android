@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Parcelable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Constraints;
 import android.support.v7.app.ActionBar;
@@ -42,6 +43,7 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
     final String PERSON_ORDER_BILL_EDIT = "person-order-bill-edit";
     final String PERSON_ORDER_BILL_POSITION = "person-order-bill-position";
     public static final String MY_BILL_LIST = "MyBillList";
+    final String PERSON_ORDER_BILL_TAX_PERCENTAGE = "person-order-bill-tax-percentage";
     ArrayList<PersonBill> mPeopleBills;
     private RecyclerView rvPeopleBillList;
     private PeopleBillListAdapter mAdapter;
@@ -56,7 +58,7 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
     EditText editTextPartyTaxInput;
     EditText editTextPartyTotalInput;
     Button buttonCalculateTax;
-    private double tax;
+    private double taxPercentage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,22 +98,20 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
         if(editTextPartyTotalInput.getText().toString().isEmpty()){
             editTextPartyTotalInput.setText("0");
         }
-        tax = Calculation.calculateTax(Double.parseDouble(editTextPartyTaxInput.getText().toString()),Double.parseDouble(editTextPartyTotalInput.getText().toString()));
+        taxPercentage = Calculation.calculateTax(Double.parseDouble(editTextPartyTaxInput.getText().toString()),Double.parseDouble(editTextPartyTotalInput.getText().toString()));
 
-        //TODO: update tax for all bills
-        //update each bill with new tax
-        if(tax != 0){
-            for(int i = 0; i < mPeopleBills.size(); i++){
+        //TODO: update tax for all bills. Issue the edit text for tax and total input reset to 0 find a way to maintain last input
+        //update existing and new bills with new tax
+        if(taxPercentage != 0){
+            for(int i = 0; i < mPeopleBills.size(); i++){//update each existing bill with new tax to display it real time
                 //set taxPercentage to each bill
-                mPeopleBills.get(i).setmTaxPercentage(tax);
+                mPeopleBills.get(i).setmTaxPercentage(taxPercentage);
                 //calculate Total with new tax for each bill
                 //create new Calculation method Calculation.calculateTotalPeopleBillListActivity(double subtotal,double tax) which return total to be set for bill
                 //update RV
                 mAdapter.notifyItemChanged(i);
             }
-            //notify adapter of tax change?
         }
-
     }
 
     //Save the state of bill list
@@ -194,6 +194,7 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
         switch (item.getItemId()){
             case R.id.action_add:
                 Intent intent = new Intent(this, PersonInputBillActivity.class);
+                intent.putExtra(PERSON_ORDER_BILL_TAX_PERCENTAGE, taxPercentage);
                 startActivity(intent);
                 return true;
             default:

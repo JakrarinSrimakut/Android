@@ -8,15 +8,17 @@ import java.util.ArrayList;
 public class Calculation {
 
     //returns total
-    public static double calculateTotal(ArrayList<PersonOrder> mPersonOrderList, double tip) {
+    public static double calculateTotal(ArrayList<PersonOrder> mPersonOrderList, double tip, double tax) {
         double total = 0;
-        //double tax = 0;
+        double subtotal = 0;
+        double taxAmount = 0;
 
         if(mPersonOrderList.isEmpty()){
             return tip;
         }
-        total = calculateSubTotal(mPersonOrderList) + tip;
-        //tax = calculateTax(subTotal);
+        subtotal = calculateSubTotal(mPersonOrderList);
+        taxAmount = subtotal*tax;
+        total = subtotal + taxAmount + tip;
 
         return total;
     }

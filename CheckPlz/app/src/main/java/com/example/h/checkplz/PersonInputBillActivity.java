@@ -35,6 +35,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
     final String PERSON_ORDER_BILL = "person-order-bill";
     final String PERSON_ORDER_BILL_EDIT = "person-order-bill-edit";
     final String PERSON_ORDER_BILL_POSITION = "person-order-bill-position";
+    final String PERSON_ORDER_BILL_TAX_PERCENTAGE = "person-order-bill-tax-percentage";
 
     //private ArrayList<PersonOrder> personOrders = new ArrayList<>();
     private PersonBill mPersonBill;
@@ -43,6 +44,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
 
     private EditText editTextName;
     private EditText editTextTip;
+    private TextView textViewTaxAmount;
     private TextView textViewTotalAmount;
     private TextView textViewSubTotalAmount;
     private TextView textView10PercentTip;
@@ -62,11 +64,12 @@ public class PersonInputBillActivity extends AppCompatActivity {
         actionBar.setTitle("PersonInputBillActivity");
 
         mPersonOrderList = new ArrayList<PersonOrder>();
-        //Edit mode
+
         Bundle extra = getIntent().getExtras();
 
         editTextName=(EditText) findViewById(R.id.person_name_input_bill_activity);
         editTextTip=(EditText) findViewById(R.id.tip_edit_text_input);
+        textViewTaxAmount=(TextView) findViewById(R.id.person_tax_amount);
         textViewTotalAmount=(TextView) findViewById(R.id.person_total_amount);
         textViewSubTotalAmount=(TextView) findViewById(R.id.person_subtotal_amount);
         textView10PercentTip = (TextView) findViewById(R.id.tip_text_view_10_percent);
@@ -74,7 +77,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
         textView20PercentTip = (TextView) findViewById(R.id.tip_text_view_20_percent);
 
         //If editing populate name and person's orders else create new person bill
-        if(extra != null){
+        if(extra.getParcelable(PERSON_ORDER_BILL_EDIT) != null){
             mPersonBill = extra.getParcelable(PERSON_ORDER_BILL_EDIT);
             mPersonPosition= extra.getInt(PERSON_ORDER_BILL_POSITION);
             mPersonOrderList = mPersonBill.getmPersonOrders();
@@ -84,6 +87,8 @@ public class PersonInputBillActivity extends AppCompatActivity {
         }
         else{
             mPersonBill = new PersonBill();
+            //set taxPercentage to new mPersonBill
+            mPersonBill.setmTaxPercentage(extra.getDouble(PERSON_ORDER_BILL_TAX_PERCENTAGE));
         }
 
         //Create recyclerView and adapter to be reference
@@ -145,17 +150,28 @@ public class PersonInputBillActivity extends AppCompatActivity {
 
     }
 
+    //get personOrderList from PersonOrderListAdapter
     private BroadcastReceiver mMessageListReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
             mPersonOrderList = intent.getParcelableArrayListExtra(UPDATE_PERSON_ORDER_LIST);
-            updateTotal();
-            updateSubTotal();
+
+            updateSubTotal();//subtotal must be calculated first to get correct tax amount so updateTax works
             updateTips();
+            updateTax();//TODO:Revise
+            updateTotal();
+
 
         }
     };
+
+    //TODO:Revise
+    private void updateTax() {
+        double taxAmount = mPersonBill.getmTaxPercentage() * mPersonBill.getmSubTotalBill();//TODO: taxpercentage not receiving
+        mPersonBill.setmTaxAmount(taxAmount);
+        textViewTaxAmount.setText(String.format("%.2f", taxAmount));
+    }
 
     private void updateTips() {
         double tenPercentTip = Calculation.calculate10PercentTip(mPersonBill.getmSubTotalBill());
@@ -178,7 +194,7 @@ public class PersonInputBillActivity extends AppCompatActivity {
     //Display the correct total value of bill
     private void updateTotal() {
         //
-        double total = Calculation.calculateTotal(mPersonOrderList, mPersonBill.getmTip());
+        double total = Calculation.calculateTotal(mPersonOrderList, mPersonBill.getmTip(), mPersonBill.getmTaxPercentage());
         mPersonBill.setmTotalBill(total);
         textViewTotalAmount.setText(String.format("%.2f", total));
     }
