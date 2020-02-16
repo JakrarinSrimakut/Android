@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Constraints;
 import android.support.v7.app.ActionBar;
@@ -87,6 +88,20 @@ public class PeopleBillListActivity extends AppCompatActivity implements PeopleB
         buildRecyclerView();
         updateData();
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putString("editTextPartyTaxInput", String.valueOf(editTextPartyTaxInput));
+        outState.putString("editTextPartyTotalInput", String.valueOf(editTextPartyTotalInput));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        editTextPartyTaxInput.setText(savedInstanceState.getString("editTextPartyTaxInput"));
+        editTextPartyTotalInput.setText(savedInstanceState.getString("editTextPartyTotalInput"));
     }
 
     //calculate and set tax to all existing bill. save tax in var to be used for new bills
