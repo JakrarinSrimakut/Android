@@ -8,12 +8,12 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.video_row.view.*
 import java.text.FieldPosition
 
-class MainAdapter : RecyclerView.Adapter<CustomViewHolder>() {
+class MainAdapter(val homeFeed: HomeFeed) : RecyclerView.Adapter<CustomViewHolder>() {
 
     val videoTitles = listOf("First title","Second", "3rd", "MOOOOORE TITLE")
 
     override fun getItemCount(): Int {
-        return videoTitles.size
+        return homeFeed.videos.count()
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         // how do we even create a view
@@ -28,8 +28,9 @@ class MainAdapter : RecyclerView.Adapter<CustomViewHolder>() {
      */
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val videoTitle = videoTitles.get(position)
-        holder?.view?.textView_video_title?.text = videoTitle
+//        val videoTitle = videoTitles.get(position)
+        val video = homeFeed.videos.get(position)
+        holder?.view?.textView_video_title?.text = video.name
     }
 
 }
