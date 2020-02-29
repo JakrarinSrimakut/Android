@@ -8,7 +8,8 @@ class Video(val id: Int, val name: String, val link: String, val imageUrl: Strin
 
 class Channel(val name: String, val profileImageUrl: String)
 
-
+class CourseLesson(val name: String, val duration: String, val number: Int, val imageUrl: String,
+                   val link: String)
 //"id": 1,
 //"name": "Instagram Firebase - Learn How to Create Users, Follow, and Send Push Notifications",
 //"link": "https://www.letsbuildthatapp.com/course/instagram-firebase",
